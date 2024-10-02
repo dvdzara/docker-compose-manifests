@@ -6,7 +6,7 @@ services:
       - NET_BIND_SERVICE
     cap_drop:
       - ALL
-    image: ghcr.io/corentinth/it-tools:2024.5.13-a0bc346
+    image: ghcr.io/corentinth/it-tools:2024.5.13-a0bc346@sha256:c191615f23eb6a18b8faca4dba15fc11caefea250ce3a8e29d249757544092eb
     ports:
       - 3003:80
     read_only: true

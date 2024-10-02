@@ -1,0 +1,19 @@
+name: filebrowser
+
+services:
+  filebrowser:
+    command:
+      - -d
+      - /database/db
+    image: docker.io/filebrowser/filebrowser:v2.31.1
+    ports:
+      - 3002:80
+    read_only: true
+    restart: always
+    volumes:
+      - data:/srv
+      - database:/database
+
+volumes:
+  data: {}
+  database: {}

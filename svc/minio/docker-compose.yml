@@ -1,0 +1,25 @@
+# Create a .env file with
+#
+# MINIO_ROOT_USER=username
+# MINIO_ROOT_PASSWORD=password
+
+name: minio
+
+services:
+  minio:
+    cap_drop:
+      - ALL
+    command:
+      - server
+    env_file: .env
+    environment:
+      - MINIO_VOLUMES=/srv/disk1 /srv/disk2 /srv/disk3 /srv/disk4
+      - MINIO_STORAGE_CLASS_STANDARD=EC:1
+      - MINIO_CONSOLE_ADDRESS=:9001
+      - MINIO_BROWSER_REDIRECT_URL=https://minio.zarantonello.dev/minio/
+    image: quay.io/minio/minio:RELEASE.2024-09-22T00-33-43Z-cpuv1
+    read_only: true
+    restart: always
+    user: 29349:29349
+    volumes:
+      - /srv/minio/disks:/srv:Z

@@ -1,0 +1,5 @@
+services:
+  devcontainer:
+    build: .
+    volumes:
+      - ../:/srv:Z

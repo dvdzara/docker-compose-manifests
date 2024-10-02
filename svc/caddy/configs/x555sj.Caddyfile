@@ -1,0 +1,23 @@
+{
+	acme_dns cloudflare {env.CF_API_TOKEN}
+}
+
+dns.zarantonello.dev {
+	encode gzip zstd
+	reverse_proxy hosts.docker.internal:3000
+}
+
+photos.zarantonello.net {
+	encode gzip zstd
+	reverse_proxy hosts.docker.internal:3001
+}
+
+files.zarantonello.dev {
+	encode gzip zstd
+	reverse_proxy hosts.docker.internal:3002
+}
+
+tools.zarantonello.net {
+	encode gzip zstd
+	reverse_proxy hosts.docker.internal:3003
+}

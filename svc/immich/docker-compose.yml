@@ -1,0 +1,64 @@
+# Create a .env file with:
+#
+# POSTGRES_PASSWORD=password
+# POSTGRES_USER=user
+# POSTGRES_DB=db
+
+name: immich
+
+services:
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:v1.116.2
+    read_only: true
+    restart: always
+    tmpfs:
+      - /.cache:uid=8723,gid=8723
+      - /.config:uid=8723,gid=8723
+      - /tmp:uid=8723,gid=8723
+    user: 8723:8723
+  immich-server:
+    cap_drop:
+      - ALL
+    depends_on:
+      - postgres
+      - redis
+    env_file: .env
+    environment:
+      - DB_HOSTNAME=postgres
+      - REDIS_HOSTNAME=redis
+      - DB_DATABASE_NAME=${POSTGRES_DB}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USERNAME=${POSTGRES_USER}
+    image: ghcr.io/immich-app/immich-server:v1.116.2
+    ports:
+      - 3001:3001
+    restart: always
+    user: 5551:5551
+    volumes:
+      - data:/usr/src/app/upload
+  postgres:
+    cap_drop:
+      - ALL
+    env_file: .env
+    image: docker.io/tensorchord/pgvecto-rs:pg16-v0.3.0-rootless@sha256:d125f3aec02bfa66764432eae76e1098a3b0c6f8bf13db38f5af1156499c90b5
+    read_only: true
+    restart: always
+    tmpfs:
+      - /tmp:uid=19166,gid=19166
+      - /var/run/postgresql:uid=19166,gid=19166
+    user: 19166:19166
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  redis:
+    cap_drop:
+      - ALL
+    image: docker.io/library/redis:7.4.0-alpine@sha256:c35af3bbcef51a62c8bae5a9a563c6f1b60d7ebaea4cb5a3ccbcc157580ae098
+    read_only: true
+    restart: always
+    tmpfs:
+      - /data:uid=9243,gid=9243
+    user: 9243:9243
+
+volumes:
+  data: {}
+  postgres: {}

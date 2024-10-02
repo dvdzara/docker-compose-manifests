@@ -1,0 +1,31 @@
+# Create .env file with:
+#
+# CF_API_TOKEN=token
+
+configs:
+  caddyfile:
+    file: configs/${HOSTNAME}.Caddyfile
+
+services:
+  caddy:
+    build: .
+    cap_add:
+      - NET_ADMIN
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
+    env_file: .env
+    extra_hosts:
+      hosts.docker.internal: host-gateway
+    ports:
+      - 443:443/tcp
+      - 443:443/udp
+    read_only: true
+    restart: always
+    tmpfs:
+      - /config
+    volumes:
+      - data:/data
+
+volumes:
+  data: {}

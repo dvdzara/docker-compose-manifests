@@ -1,0 +1,13 @@
+{
+	acme_dns cloudflare {env.CF_API_TOKEN}
+}
+
+minio.zarantonello.dev {
+	encode gzip zstd
+
+	handle_path /minio/* {
+		reverse_proxy hosts.docker.internal:9001
+	}
+
+	reverse_proxy hosts.docker.internal:9000
+}

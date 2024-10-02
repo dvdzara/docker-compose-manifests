@@ -1,0 +1,18 @@
+name: adguard
+
+services:
+  adguard:
+    image: docker.io/adguard/adguardhome:v0.107.52
+    ports:
+      - 3000:3000
+      - 53:53/tcp
+      - 53:53/udp
+    read_only: true
+    restart: always
+    volumes:
+      - config:/opt/adguardhome/conf
+      - data:/opt/adguardhome/work
+
+volumes:
+  config: {}
+  data: {}

@@ -13,13 +13,16 @@ services:
       - server
     env_file: .env
     environment:
-      - MINIO_VOLUMES=/srv/disk1 /srv/disk2 /srv/disk3 /srv/disk4
+      - MINIO_VOLUMES=/mnt/disk1 /mnt/disk2 /mnt/disk3 /mnt/disk4
       - MINIO_STORAGE_CLASS_STANDARD=EC:1
       - MINIO_CONSOLE_ADDRESS=:9001
       - MINIO_BROWSER_REDIRECT_URL=https://minio.zarantonello.dev/minio/
-    image: quay.io/minio/minio:RELEASE.2024-09-22T00-33-43Z-cpuv1@sha256:a7014fa9b563ecdfbf4e7617dde18a7e5fba312a2ad8fd448bf056e799856831
+    image: quay.io/minio/minio:RELEASE.2024-10-02T17-50-41Z-cpuv1
+    ports:
+      - 9000:9000
+      - 9001:9001
     read_only: true
     restart: always
     user: 29349:29349
     volumes:
-      - /srv/minio/disks:/srv:Z
+      - /mnt/minio:/mnt:Z

@@ -1,6 +1,6 @@
 {
   "name": "docker-compose-manifests",
-  "image": "mcr.microsoft.com/devcontainers/base:1.0.9-bookworm",
+  "image": "mcr.microsoft.com/devcontainers/base:1.0.16-bookworm",
   "customizations": {
     "vscode": {
       "extensions": [

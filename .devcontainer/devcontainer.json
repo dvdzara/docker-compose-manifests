@@ -1,15 +1,17 @@
 {
+  "name": "docker-compose-manifests",
+  "image": "mcr.microsoft.com/devcontainers/base:1.0.9-bookworm",
   "customizations": {
     "vscode": {
       "extensions": [
         "DavidAnson.vscode-markdownlint",
         "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-docker",
+        "github.vscode-github-actions",
         "redhat.vscode-yaml"
       ]
     }
   },
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "devcontainer",
-  "workspaceFolder": "/srv"
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils": {}
+  }
 }

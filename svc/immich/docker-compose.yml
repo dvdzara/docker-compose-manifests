@@ -13,9 +13,10 @@ services:
     restart: always
     tmpfs:
       - /.cache:uid=8723,gid=8723
-      - /.config:uid=8723,gid=8723
       - /tmp:uid=8723,gid=8723
     user: 8723:8723
+    volumes:
+      - machine-learning-cache:/cache
   immich-server:
     cap_drop:
       - ALL
@@ -61,4 +62,5 @@ services:
 
 volumes:
   data: {}
+  machine-learning-cache: {}
   postgres: {}

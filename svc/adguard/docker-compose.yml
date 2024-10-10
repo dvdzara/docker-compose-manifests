@@ -8,11 +8,11 @@ networks:
 
 services:
   adguard:
+    # kics-scan ignore-block
+    cap_add:
+      - NET_BIND_SERVICE
     cap_drop:
       - ALL
-    cap_add:
-      # kics-scan ignore-line
-      - NET_BIND_SERVICE
     image: docker.io/adguard/adguardhome:v0.107.53@sha256:d9c512051141e6a617d773f16cdf6782c178464c6e766acf9fe63482a171f95c
     networks:
       caddy:

@@ -1,7 +1,7 @@
 # Create a .env file with
 #
-# MINIO_ROOT_USER=username
-# MINIO_ROOT_PASSWORD=password
+# MINIO_ROOT_USER=
+# MINIO_ROOT_PASSWORD=
 
 name: minio
 

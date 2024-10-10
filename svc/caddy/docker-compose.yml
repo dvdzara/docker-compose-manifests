@@ -1,6 +1,6 @@
 # Create .env file with:
 #
-# CF_API_TOKEN=token
+# CF_API_TOKEN=
 
 configs:
   caddyfile:

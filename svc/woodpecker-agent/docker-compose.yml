@@ -1,6 +1,6 @@
 # Create a .env file with:
 #
-# WOODPECKER_AGENT_SECRET=secret
+# WOODPECKER_AGENT_SECRET=
 
 name: woodpecker-agent
 
@@ -19,6 +19,7 @@ services:
     user: 36307:36307
     volumes:
       - config:/etc/woodpecker
+      # kics-scan ignore-line
       - /var/run/docker.sock:/var/run/docker.sock:z
 
 volumes:

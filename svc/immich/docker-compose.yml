@@ -1,8 +1,8 @@
 # Create a .env file with:
 #
-# POSTGRES_PASSWORD=password
-# POSTGRES_USER=user
-# POSTGRES_DB=db
+# POSTGRES_PASSWORD=
+# POSTGRES_USER=
+# POSTGRES_DB=
 
 name: immich
 

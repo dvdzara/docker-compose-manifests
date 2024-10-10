@@ -21,7 +21,7 @@ services:
       - WOODPECKER_ADMIN=dvdzara
       - WOODPECKER_HOST=https://ci.zarantonello.dev
       - WOODPECKER_GITHUB=true
-    image: docker.io/woodpeckerci/woodpecker-server:v2.7.1
+    image: docker.io/woodpeckerci/woodpecker-server:v2.7.1@sha256:5fbc4e0fd3b56e20b999638d25f3b8826ba17998457da5747f56cb85f5c5bba8
     networks:
       cloudflared:
         aliases:

@@ -23,7 +23,8 @@ services:
     read_only: true
     restart: always
     tmpfs:
-      - /config
+      - /config?uid:41380,gid=41380
+    user: 41380:41380
     volumes:
       - data:/data
 

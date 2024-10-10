@@ -6,5 +6,5 @@ FROM docker.io/library/caddy:2.8.4-alpine@sha256:33937b9d51461ea87794350c1c09ce5
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
-USER 0
+USER 41380
 HEALTHCHECK NONE

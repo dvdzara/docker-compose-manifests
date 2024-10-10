@@ -6,9 +6,16 @@
 
 name: immich
 
+networks:
+  caddy:
+    external: true
+  default: {}
+
 services:
   immich-machine-learning:
     image: ghcr.io/immich-app/immich-machine-learning:v1.117.0@sha256:1221bc54568a0779227baeaa4282bb0e0db50831b66f9ac9afa9d78513df36ad
+    networks:
+      - default
     read_only: true
     restart: always
     tmpfs:
@@ -31,8 +38,14 @@ services:
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - DB_USERNAME=${POSTGRES_USER}
     image: ghcr.io/immich-app/immich-server:v1.117.0@sha256:ac9fb82f2be3cc60d4e0c7f1ceb371d401d52573e387834d7a82776116458242
+    networks:
+      caddy:
+        aliases:
+          - immich
+      default: {}
     ports:
-      - 3001:3001
+      # Used for connecting the app, since there is already tailscale encryption.
+      - 100.106.32.89:3001:3001
     restart: always
     user: 5551:5551
     volumes:
@@ -42,6 +55,8 @@ services:
       - ALL
     env_file: .env
     image: docker.io/tensorchord/pgvecto-rs:pg16-v0.3.0-rootless@sha256:d125f3aec02bfa66764432eae76e1098a3b0c6f8bf13db38f5af1156499c90b5
+    networks:
+      - default
     read_only: true
     restart: always
     tmpfs:
@@ -54,6 +69,8 @@ services:
     cap_drop:
       - ALL
     image: docker.io/library/redis:7.4.1-alpine@sha256:de13e74e14b98eb96bdf886791ae47686c3c5d29f9d5f85ea55206843e3fce26
+    networks:
+      - default
     read_only: true
     restart: always
     tmpfs:

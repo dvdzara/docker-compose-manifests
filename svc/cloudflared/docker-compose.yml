@@ -4,6 +4,10 @@
 
 name: cloudflared
 
+networks:
+  cloudflared:
+    name: cloudflared
+
 services:
   cloudflared:
     cap_drop:
@@ -14,8 +18,8 @@ services:
     env_file: .env
     environment:
       NO_AUTOUPDATE: true
-    extra_hosts:
-      hosts.docker.internal: host-gateway
+    networks:
+      - cloudflared
     image: docker.io/cloudflare/cloudflared:2024.10.0
     read_only: true
     restart: always

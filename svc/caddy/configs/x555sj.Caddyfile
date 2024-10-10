@@ -4,15 +4,15 @@
 
 dns.zarantonello.dev {
 	encode gzip zstd
-	reverse_proxy hosts.docker.internal:3000
+	reverse_proxy adguard:3000
 }
 
 photos.zarantonello.net {
 	encode gzip zstd
-	reverse_proxy hosts.docker.internal:3001
+	reverse_proxy immich:3001
 }
 
 files.zarantonello.dev {
 	encode gzip zstd
-	reverse_proxy hosts.docker.internal:3002
+	reverse_proxy filebrowser:3000
 }

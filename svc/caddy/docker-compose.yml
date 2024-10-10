@@ -6,6 +6,10 @@ configs:
   caddyfile:
     file: configs/${HOSTNAME}.Caddyfile
 
+networks:
+  caddy:
+    name: caddy
+
 services:
   caddy:
     build: .
@@ -15,8 +19,8 @@ services:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
     env_file: .env
-    extra_hosts:
-      hosts.docker.internal: host-gateway
+    networks:
+      - caddy
     ports:
       - 443:443/tcp
       - 443:443/udp
@@ -25,7 +29,7 @@ services:
     security_opt:
       - no-new-privileges=true
     tmpfs:
-      - /config?uid:41380,gid=41380
+      - /config?uid=41380,gid=41380
     user: 41380:41380
     volumes:
       - data:/data

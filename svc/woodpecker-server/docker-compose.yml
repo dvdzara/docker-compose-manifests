@@ -6,6 +6,10 @@
 
 name: woodpecker-server
 
+networks:
+  cloudflared:
+    external: true
+
 services:
   woodpecker-server:
     cap_drop:
@@ -16,9 +20,14 @@ services:
       - WOODPECKER_HOST=https://ci.zarantonello.dev
       - WOODPECKER_GITHUB=true
     image: docker.io/woodpeckerci/woodpecker-server:v2.7.1-alpine
+    networks:
+      cloudflared:
+        aliases:
+          - woodpecker
     ports:
-      - 3003:8000
-      - 3004:9000
+      - 100.106.32.89:9000:9000
+    security_opt:
+      - no-new-privileges=true
     read_only: true
     restart: always
     user: 4518:4518

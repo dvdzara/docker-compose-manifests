@@ -5,6 +5,10 @@
 
 name: minio
 
+networks:
+  caddy:
+    external: true
+
 services:
   minio:
     cap_drop:
@@ -18,9 +22,10 @@ services:
       - MINIO_CONSOLE_ADDRESS=:9001
       - MINIO_BROWSER_REDIRECT_URL=https://minio.zarantonello.dev/minio/
     image: quay.io/minio/minio:RELEASE.2024-10-02T17-50-41Z-cpuv1@sha256:49599b999e2415e854b7038c0d691be02011389c13340399077871c89cd75763
-    ports:
-      - 9000:9000
-      - 9001:9001
+    networks:
+      caddy:
+        aliases:
+          - minio
     read_only: true
     restart: always
     user: 29349:29349

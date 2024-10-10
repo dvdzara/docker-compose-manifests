@@ -16,8 +16,3 @@ files.zarantonello.dev {
 	encode gzip zstd
 	reverse_proxy hosts.docker.internal:3002
 }
-
-tools.zarantonello.net {
-	encode gzip zstd
-	reverse_proxy hosts.docker.internal:3003
-}

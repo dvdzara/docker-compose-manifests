@@ -22,12 +22,14 @@ services:
     networks:
       - caddy
     ports:
+      # kics-scan ignore-line
       - 443:443/tcp
+      # kics-scan ignore-line
       - 443:443/udp
     read_only: true
     restart: always
     security_opt:
-      - no-new-privileges=true
+      - no-new-privileges:true
     tmpfs:
       - /config?uid=41380,gid=41380
     user: 41380:41380

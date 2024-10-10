@@ -8,8 +8,6 @@ services:
   adguard:
     cap_drop:
       - ALL
-    cap_add:
-      - NET_BIND_SERVICE
     image: docker.io/adguard/adguardhome:v0.107.53@sha256:d9c512051141e6a617d773f16cdf6782c178464c6e766acf9fe63482a171f95c
     networks:
       caddy:
@@ -21,7 +19,7 @@ services:
     read_only: true
     restart: always
     security_opt:
-      - no-new-privileges=true
+      - no-new-privileges:true
     user: 58442:58442
     volumes:
       - config:/opt/adguardhome/conf

@@ -2,13 +2,21 @@
 #
 # WOODPECKER_AGENT_SECRET=secret
 
+name: woodpecker-agent
+
 services:
   woodpecker-agent:
+    cap_drop:
+      - ALL
     env_file: .env
     environment:
       WOODPECKER_SERVER: x555sj.gentoo-sargas.ts.net:3004
+    group_add:
+      - "993"
     image: docker.io/woodpeckerci/woodpecker-agent:v2.7.1-alpine
+    read_only: true
     restart: always
+    user: 36307:36307
     volumes:
       - config:/etc/woodpecker
       - /var/run/docker.sock:/var/run/docker.sock:z

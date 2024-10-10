@@ -8,6 +8,8 @@ name: woodpecker-server
 
 services:
   woodpecker-server:
+    cap_drop:
+      - ALL
     env_file: .env
     environment:
       - WOODPECKER_ADMIN=dvdzara
@@ -17,6 +19,9 @@ services:
     ports:
       - 3003:8000
       - 3004:9000
+    read_only: true
+    restart: always
+    user: 4518:4518
     volumes:
       - data:/var/lib/woodpecker
 

@@ -6,6 +6,8 @@ name: cloudflared
 
 services:
   cloudflared:
+    cap_drop:
+      - ALL
     command:
       - tunnel
       - run
@@ -14,5 +16,7 @@ services:
       NO_AUTOUPDATE: true
     extra_hosts:
       hosts.docker.internal: host-gateway
-    image: docker.io/cloudflare/cloudflared:2024.9.1
-
+    image: docker.io/cloudflare/cloudflared:2024.10.0
+    restart: always
+    read_only: true
+    user: 17026:17026

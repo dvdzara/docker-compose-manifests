@@ -19,4 +19,6 @@ services:
     image: docker.io/cloudflare/cloudflared:2024.10.0
     read_only: true
     restart: always
+    security_opt:
+      - no-new-privileges=true
     user: 17026:17026

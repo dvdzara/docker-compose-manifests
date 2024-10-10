@@ -1,3 +1,5 @@
+# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
+
 # Create .env file with:
 #
 # CF_API_TOKEN=
@@ -11,12 +13,12 @@ networks:
     name: caddy
 
 services:
-  # kics-scan ignore-line
   caddy:
     build: .
-    # kics-scan ignore-block
+    cap_drop:
+      - ALL
     cap_add:
-      - NET_ADMIN
+      - NET_BIND_SERVICE
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile

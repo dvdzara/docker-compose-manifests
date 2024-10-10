@@ -1,0 +1,18 @@
+# Create a .end file with:
+#
+# TUNNEL_TOKEN=secret
+
+name: cloudflared
+
+services:
+  cloudflared:
+    command:
+      - tunnel
+      - run
+    env_file: .env
+    environment:
+      NO_AUTOUPDATE: true
+    extra_hosts:
+      hosts.docker.internal: host-gateway
+    image: docker.io/cloudflare/cloudflared:2024.9.1
+

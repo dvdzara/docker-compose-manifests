@@ -1,0 +1,17 @@
+# Create a .env file with:
+#
+# WOODPECKER_AGENT_SECRET=secret
+
+services:
+  woodpecker-agent:
+    image: docker.io/woodpeckerci/woodpecker-agent:v2.7.1-alpine
+    restart: always
+    volumes:
+      - config:/etc/woodpecker
+      - /var/run/docker.sock:/var/run/docker.sock:z
+    env_file: .env
+    environment:
+      WOODPECKER_SERVER: x555sj.gentoo-sargas.ts.net:3004
+
+volumes:
+  config: {}

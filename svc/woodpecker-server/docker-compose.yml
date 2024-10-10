@@ -8,17 +8,17 @@ name: woodpecker-server
 
 services:
   woodpecker-server:
+    env_file: .env
+    environment:
+      - WOODPECKER_ADMIN=dvdzara
+      - WOODPECKER_HOST=https://ci.zarantonello.dev
+      - WOODPECKER_GITHUB=true
     image: docker.io/woodpeckerci/woodpecker-server:v2.7.1-alpine
     ports:
       - 3003:8000
       - 3004:9000
     volumes:
       - data:/var/lib/woodpecker
-    env_file: .env
-    environment:
-      - WOODPECKER_ADMIN=dvdzara
-      - WOODPECKER_HOST=https://ci.zarantonello.dev
-      - WOODPECKER_GITHUB=true
 
 volumes:
   data: {}

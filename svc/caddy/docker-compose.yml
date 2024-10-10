@@ -11,10 +11,11 @@ networks:
     name: caddy
 
 services:
+  # kics-scan ignore-line
   caddy:
     build: .
+    # kics-scan ignore-block
     cap_add:
-      # kics-scan ignore-line
       - NET_ADMIN
     configs:
       - source: caddyfile

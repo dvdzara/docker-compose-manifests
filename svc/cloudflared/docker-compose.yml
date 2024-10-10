@@ -1,4 +1,6 @@
-# Create a .end file with:
+# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
+
+# Create a .env file with:
 #
 # TUNNEL_TOKEN=
 

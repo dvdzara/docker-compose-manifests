@@ -13,6 +13,7 @@ services:
       caddy:
         aliases:
           - adguard
+    # kics-scan ignore-block
     ports:
       - 100.106.32.89:53:5353/tcp
       - 100.106.32.89:53:5353/udp

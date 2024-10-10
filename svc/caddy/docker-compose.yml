@@ -13,8 +13,8 @@ networks:
 services:
   caddy:
     build: .
-    # kics-scan ignore-block
     cap_add:
+      # kics-scan ignore-line
       - NET_ADMIN
     configs:
       - source: caddyfile

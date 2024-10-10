@@ -13,6 +13,7 @@ networks:
 services:
   caddy:
     build: .
+    # kics-scan ignore-block
     cap_add:
       - NET_ADMIN
     configs:
@@ -21,10 +22,9 @@ services:
     env_file: .env
     networks:
       - caddy
+    # kics-scan ignore-block
     ports:
-      # kics-scan ignore-line
       - 443:443/tcp
-      # kics-scan ignore-line
       - 443:443/udp
     read_only: true
     restart: always

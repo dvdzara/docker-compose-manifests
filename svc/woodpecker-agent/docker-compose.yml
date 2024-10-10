@@ -15,7 +15,7 @@ services:
       WOODPECKER_SERVER: x555sj.gentoo-sargas.ts.net:9000
     group_add:
       - "993"
-    image: docker.io/woodpeckerci/woodpecker-agent:v2.7.1
+    image: docker.io/woodpeckerci/woodpecker-agent:v2.7.1@sha256:1b021b729048a683984f11bb55c05ce3c81475f19be1040f0fd4d46f7fbe2b12
     read_only: true
     restart: always
     security_opt:

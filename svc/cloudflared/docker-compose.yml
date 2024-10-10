@@ -17,6 +17,6 @@ services:
     extra_hosts:
       hosts.docker.internal: host-gateway
     image: docker.io/cloudflare/cloudflared:2024.10.0
-    restart: always
     read_only: true
+    restart: always
     user: 17026:17026

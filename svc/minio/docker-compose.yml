@@ -1,9 +1,15 @@
+# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
+
 # Create a .env file with
 #
-# MINIO_ROOT_USER=username
-# MINIO_ROOT_PASSWORD=password
+# MINIO_ROOT_USER=
+# MINIO_ROOT_PASSWORD=
 
 name: minio
+
+networks:
+  caddy:
+    external: true
 
 services:
   minio:
@@ -18,11 +24,14 @@ services:
       - MINIO_CONSOLE_ADDRESS=:9001
       - MINIO_BROWSER_REDIRECT_URL=https://minio.zarantonello.dev/minio/
     image: quay.io/minio/minio:RELEASE.2024-10-02T17-50-41Z-cpuv1@sha256:49599b999e2415e854b7038c0d691be02011389c13340399077871c89cd75763
-    ports:
-      - 9000:9000
-      - 9001:9001
+    networks:
+      caddy:
+        aliases:
+          - minio
     read_only: true
     restart: always
+    security_opt:
+      - no-new-privileges:true
     user: 29349:29349
     volumes:
       - /mnt/minio:/mnt:Z

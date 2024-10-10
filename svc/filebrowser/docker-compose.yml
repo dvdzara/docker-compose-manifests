@@ -1,15 +1,28 @@
+# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
+
 name: filebrowser
+
+networks:
+  caddy:
+    external: true
 
 services:
   filebrowser:
+    cap_drop:
+      - ALL
     command:
-      - -d
-      - /database/db
+      - --database=/database/db
+      - --port=3000
     image: docker.io/filebrowser/filebrowser:v2.31.2@sha256:a4da9ca8364b0a1fc5dd36f7add92582bf673c0ae0bda8dd9bd13062c41d1715
-    ports:
-      - 3002:80
+    networks:
+      caddy:
+        aliases:
+          - filebrowser
     read_only: true
     restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 50788:50788
     volumes:
       - data:/srv
       - database:/database

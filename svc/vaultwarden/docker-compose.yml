@@ -39,8 +39,8 @@ services:
       caddy:
         aliases:
           - vaultwarden
-    restart: always
     read_only: true
+    restart: always
     security_opt:
       - no-new-privileges:true
     user: 53382:53382

@@ -1,0 +1,51 @@
+# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
+
+# Create a .env file with:
+#
+# ADMIN_TOKEN=
+# PUSH_INSTALLATION_ID=
+# PUSH_INSTALLATION_KEY=
+# SMTP_PASSWORD=
+# SMTP_USERNAME=
+
+name: vaultwarden
+
+networks:
+  caddy:
+    external: true
+
+services:
+  vaultwarden:
+    cap_drop:
+      - ALL
+    env_file: .env
+    environment:
+      DOMAIN: https://vault.zarantonello.net
+      INVITATIONS_ALLOWED: false
+      PASSWORD_HINTS_ALLOWED: false
+      PUSH_ENABLED: true
+      PUSH_IDENTITY_URI: https://identity.bitwarden.eu
+      PUSH_RELAY_URI: https://api.bitwarden.eu
+      ROCKET_PORT: 3000
+      SENDS_ALLOWED: false
+      SIGNUPS_ALLOWED: false
+      SMTP_FROM: vault@zarantonello.net
+      SMTP_HOST: smtp.purelymail.com
+      SMTP_PORT: 465
+      SMTP_SECURITY: force_tls
+      TRASH_AUTO_DELETE_DAYS: 60
+    image: quay.io/vaultwarden/server:1.32.1-alpine
+    networks:
+      caddy:
+        aliases:
+          - vaultwarden
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 53382:53382
+    volumes:
+      - data:/data
+
+volumes:
+  data: {}

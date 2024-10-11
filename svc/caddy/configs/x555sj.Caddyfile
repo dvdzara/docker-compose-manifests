@@ -16,3 +16,8 @@ files.zarantonello.dev {
 	encode gzip zstd
 	reverse_proxy filebrowser:3000
 }
+
+vault.zarantonello.net {
+	encode gzip zstd
+	reverse_proxy vaultwarden:3000
+}

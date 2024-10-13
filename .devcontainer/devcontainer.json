@@ -1,5 +1,5 @@
 {
-  "name": "scripts",
+  "name": "docker-compose-manifests",
   "build": {
     "dockerfile": "Dockerfile"
   },

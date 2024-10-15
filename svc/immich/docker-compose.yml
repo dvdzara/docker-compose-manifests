@@ -51,7 +51,7 @@ services:
       default: {}
     ports:
       # Used for connecting the app, since there is already tailscale encryption.
-      - 100.106.32.89:3001:3001
+      - 100.106.32.89:2883:2883
     restart: always
     security_opt:
       - no-new-privileges:true

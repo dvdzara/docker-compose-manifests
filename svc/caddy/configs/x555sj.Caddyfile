@@ -9,7 +9,7 @@ dns.zarantonello.dev {
 
 photos.zarantonello.net {
 	encode gzip zstd
-	reverse_proxy immich:2883
+	reverse_proxy immich:2283
 }
 
 files.zarantonello.dev {

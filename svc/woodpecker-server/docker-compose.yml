@@ -1,5 +1,3 @@
-# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
-
 # Create a .env file with:
 #
 # WOODPECKER_GITHUB_CLIENT=
@@ -21,6 +19,14 @@ services:
       - WOODPECKER_ADMIN=dvdzara
       - WOODPECKER_HOST=https://ci.zarantonello.dev
       - WOODPECKER_GITHUB=true
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test:
+        - CMD
+        - woodpecker-server
+        - ping
+      timeout: 5s
     image: docker.io/woodpeckerci/woodpecker-server:v2.7.1@sha256:5fbc4e0fd3b56e20b999638d25f3b8826ba17998457da5747f56cb85f5c5bba8
     networks:
       cloudflared:

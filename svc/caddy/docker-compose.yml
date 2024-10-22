@@ -11,7 +11,8 @@ configs:
     file: configs/${HOSTNAME}.Caddyfile
 
 networks:
-  cloudflared_default: {}
+  cloudflared_default:
+    external: true
   default: {}
 
 services:

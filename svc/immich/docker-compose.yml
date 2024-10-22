@@ -2,9 +2,9 @@
 
 # Create a .env file with:
 #
+# POSTGRES_DB=
 # POSTGRES_PASSWORD=
 # POSTGRES_USER=
-# POSTGRES_DB=
 
 networks:
   caddy_default:

@@ -7,47 +7,140 @@
 # - POSTGRES_DB
 # - POSTGRES_PASSWORD
 # - POSTGRES_USER
-#
-# Only the first time, run `docker compose create` to create volumes but don't
-# start containers. Then run `chown -R 82:82 /var/lib/docker/volumes/nextcloud_data/ _data`
-# and after that `docker compose up -d`.
+# - NEXTCLOUD_ADMIN_USER
+# - NEXTCLOUD_ADMIN_PASSWORD
 #
 # Additional configuration can be done by running
 # `docker compose exec -it nextcloud vi /var/www/html/config/config.php`.
 
-# Refer to `../caddy/configs/x555sj.Caddyfile` for the php-fpm config.
+configs:
+  caddyfile:
+    file: Caddyfile
 
 networks:
-  caddy_default:
+  cloudflared_default:
     external: true
   default: {}
 
 services:
-  nextcloud:
+  caddy:
+    # kics-scan ignore-block
+    cap_add:
+      - NET_BIND_SERVICE
+    cap_drop:
+      - ALL
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
+    image: docker.io/library/caddy:2.8.4-alpine
+    networks:
+      cloudflared_default:
+        aliases:
+          - nextcloud
+      default: {}
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 52892:52892
+    tmpfs:
+      - /config:uid=52892,gid=52892
+      - /data:uid=52892,gid=52892
+    volumes:
+      - nextcloud:/var/www/html:ro
+
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 82:82 /volumes/data && chown -R 24056:24056 /volumes/redis
+    image: docker.io/library/busybox:1.37.0-musl
+    read_only: true
+    restart: no
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - data:/volumes/data
+      - redis:/volumes/redis
+
+  nextcloud_server:
+    build: .
     cap_drop:
       - ALL
     depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
+    devices:
+      - /dev/dri
     env_file: .env
     environment:
+      NEXTCLOUD_TRUSTED_DOMAINS: cloud.zarantonello.dev
+      OVERWRITEHOST: cloud.zarantonello.dev
+      OVERWRITEPROTOCOL: https
+      OVERWRITECLIURL: http://caddy:3000
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:b6d31dfc4c47008b70ae6ca7235a3dc90e5343e69c1d61dff7f27b842e8e3876
     networks:
-      caddy_default:
-        aliases:
-          - nextcloud
-      default: {}
+      - default
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:uid=82,gid=82,exec
+    user: 82:82
+    volumes:
+      - data:/var/www/html/data
+      - nextcloud:/var/www/html
+
+  nextcloud_cron:
+    build: .
+    cap_drop:
+      - ALL
+    depends_on:
+      nextcloud_server:
+        condition: service_started
+    entrypoint:
+      - sh
+      - -c
+      - while true ; do php -f /var/www/html/cron.php && sleep 300 ; done
+    networks:
+      - default
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:uid=82,gid=82,exec
+    user: 82:82
+    volumes:
+      - data:/var/www/html/data
+      - nextcloud:/var/www/html
+
+  nextcloud_notify_push:
+    build: .
+    cap_drop:
+      - ALL
+    depends_on:
+      nextcloud_server:
+        condition: service_started
+    entrypoint:
+      - /var/www/html/custom_apps/notify_push/bin/x86_64/notify_push
+      - /var/www/html/config/config.php
+    networks:
+      - default
+    read_only: true
     restart: always
     security_opt:
       - no-new-privileges:true
     user: 82:82
     volumes:
-      - data:/var/www/html/data
       - nextcloud:/var/www/html
+
   postgres:
     cap_drop:
       - ALL
@@ -72,9 +165,13 @@ services:
     user: 70:70
     volumes:
       - postgres:/var/lib/postgresql/data
+
   redis:
     cap_drop:
       - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     healthcheck:
       interval: 10s
       retries: 5
@@ -90,11 +187,12 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
-    tmpfs:
-      - /data:uid=9243,gid=9243
-    user: 9243:9243
+    user: 24056:24056
+    volumes:
+      - redis:/data
 
 volumes:
   data: {}
   nextcloud: {}
   postgres: {}
+  redis: {}

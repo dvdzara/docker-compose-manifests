@@ -1,0 +1,45 @@
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static 172.16.0.0/12
+		client_ip_headers CF-Connecting-IP
+	}
+
+}
+
+:3000 {
+	header {
+		Strict-Transport-Security max-age=15552000;
+	}
+
+	handle_path /push/* {
+		uri strip_prefix /push
+		reverse_proxy nextcloud_notify_push:7867
+	}
+
+	@dav {
+		path /.well-known/carddav
+		path /.well-known/caldav
+	}
+	redir @dav /remote.php/dav 301
+
+	@forbidden {
+		path /.htaccess
+		path /data/*
+		path /config/*
+		path /db_structure
+		path /.xml
+		path /README
+		path /3rdparty/*
+		path /lib/*
+		path /templates/*
+		path /occ
+		path /console.php
+	}
+	respond @forbidden 404
+
+	file_server
+	root * /var/www/html
+	php_fastcgi nextcloud_server:9000
+}

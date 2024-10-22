@@ -22,12 +22,3 @@ vault.zarantonello.net {
 	encode gzip zstd
 	reverse_proxy vaultwarden:3000
 }
-
-:9000 {
-	file_server
-	root * /srv/php/nextcloud
-
-	php_fastcgi nextcloud:9000 {
-		root /var/www/html
-	}
-}

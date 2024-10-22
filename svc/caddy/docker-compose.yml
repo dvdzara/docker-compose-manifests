@@ -11,8 +11,6 @@ configs:
     file: configs/${HOSTNAME}.Caddyfile
 
 networks:
-  cloudflared_default:
-    external: true
   default: {}
 
 services:
@@ -30,10 +28,7 @@ services:
     extra_hosts:
       - adguard:host-gateway
     networks:
-      cloudflared_default:
-        aliases:
-          - caddy
-      default: {}
+      - default
     # kics-scan ignore-block
     ports:
       - 443:443/tcp
@@ -43,13 +38,10 @@ services:
     security_opt:
       - no-new-privileges:true
     tmpfs:
-      - /config?uid=41380,gid=41380
+      - /config:uid=41380,gid=41380
     user: 41380:41380
     volumes:
       - data:/data
-      - nextcloud_nextcloud:/srv/php/nextcloud
 
 volumes:
   data: {}
-  nextcloud_nextcloud:
-    external: true

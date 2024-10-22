@@ -4,11 +4,8 @@
 #
 # TUNNEL_TOKEN=
 
-name: cloudflared
-
 networks:
-  cloudflared:
-    name: cloudflared
+  default: {}
 
 services:
   cloudflared:
@@ -22,7 +19,7 @@ services:
       NO_AUTOUPDATE: true
     image: docker.io/cloudflare/cloudflared:2024.10.0@sha256:060f16531b1ed6dcb382cd2b35d1a845f8dbcb445003b9ec48eef0078cb08bf4
     networks:
-      - cloudflared
+      - default
     read_only: true
     restart: always
     security_opt:

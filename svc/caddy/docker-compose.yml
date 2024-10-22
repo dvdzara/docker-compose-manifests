@@ -9,8 +9,7 @@ configs:
     file: configs/${HOSTNAME}.Caddyfile
 
 networks:
-  caddy:
-    name: caddy
+  default: {}
 
 services:
   caddy:
@@ -24,8 +23,10 @@ services:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
     env_file: .env
+    extra_hosts:
+      - adguard:host-gateway
     networks:
-      - caddy
+      - default
     # kics-scan ignore-block
     ports:
       - 443:443/tcp
@@ -39,6 +40,9 @@ services:
     user: 41380:41380
     volumes:
       - data:/data
+      - nextcloud_nextcloud:/srv/php/nextcloud
 
 volumes:
   data: {}
+  nextcloud_nextcloud:
+    external: true

@@ -42,10 +42,10 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
+    user: 52892:52892
     tmpfs:
       - /config:uid=52892,gid=52892
       - /data:uid=52892,gid=52892
-    user: 52892:52892
     volumes:
       - nextcloud:/var/www/html:ro
 
@@ -119,6 +119,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    devices:
+      - /dev/dri
     env_file: .env
     environment:
       NEXTCLOUD_TRUSTED_DOMAINS: cloud.zarantonello.dev
@@ -127,14 +129,37 @@ services:
       OVERWRITEPROTOCOL: https
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:b6d31dfc4c47008b70ae6ca7235a3dc90e5343e69c1d61dff7f27b842e8e3876
     networks:
       - default
     restart: always
     security_opt:
       - no-new-privileges:true
     tmpfs:
-      - /tmp:uid=82,gid=82
+      - /tmp:uid=82,gid=82,exec
+    user: 82:82
+    volumes:
+      - data:/var/www/html/data
+      - nextcloud:/var/www/html
+
+  nextcloud_cron:
+    build: .
+    cap_drop:
+      - ALL
+    depends_on:
+      nextcloud_server:
+        condition: service_started
+    entrypoint:
+      - sh
+      - -c
+      - while true ; do php -f /var/www/html/cron.php && sleep 300 ; done
+    networks:
+      - default
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:uid=82,gid=82,exec
     user: 82:82
     volumes:
       - data:/var/www/html/data

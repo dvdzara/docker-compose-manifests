@@ -1,9 +1,7 @@
 # kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
 
-name: filebrowser
-
 networks:
-  caddy:
+  caddy_default:
     external: true
 
 services:
@@ -15,7 +13,7 @@ services:
       - --port=3000
     image: docker.io/filebrowser/filebrowser:v2.31.2@sha256:a4da9ca8364b0a1fc5dd36f7add92582bf673c0ae0bda8dd9bd13062c41d1715
     networks:
-      caddy:
+      caddy_default:
         aliases:
           - filebrowser
     read_only: true

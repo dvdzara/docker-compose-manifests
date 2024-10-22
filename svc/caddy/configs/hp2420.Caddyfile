@@ -1,4 +1,5 @@
 {
+	admin off
 	acme_dns cloudflare {env.CF_API_TOKEN}
 }
 

@@ -2,8 +2,6 @@
 #
 # WOODPECKER_AGENT_SECRET=
 
-name: woodpecker-agent
-
 services:
   woodpecker-agent:
     cap_drop:
@@ -30,9 +28,5 @@ services:
       - no-new-privileges:true
     user: 36307:36307
     volumes:
-      - config:/etc/woodpecker
       # kics-scan ignore-line
       - /var/run/docker.sock:/var/run/docker.sock:z
-
-volumes:
-  config: {}

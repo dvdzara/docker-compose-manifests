@@ -1,4 +1,5 @@
 {
+	admin off
 	acme_dns cloudflare {env.CF_API_TOKEN}
 }
 
@@ -20,4 +21,14 @@ files.zarantonello.dev {
 vault.zarantonello.net {
 	encode gzip zstd
 	reverse_proxy vaultwarden:3000
+}
+
+nextcloud.zarantonello.dev {
+	encode gzip zstd
+	file_server
+	root * /srv/php/nextcloud
+
+	php_fastcgi nextcloud:9000 {
+		root /var/www/html
+	}
 }

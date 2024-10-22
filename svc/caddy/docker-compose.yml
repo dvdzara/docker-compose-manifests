@@ -11,6 +11,7 @@ configs:
     file: configs/${HOSTNAME}.Caddyfile
 
 networks:
+  cloudflared_default: {}
   default: {}
 
 services:
@@ -28,7 +29,10 @@ services:
     extra_hosts:
       - adguard:host-gateway
     networks:
-      - default
+      cloudflared_default:
+        aliases:
+          - caddy
+      default: {}
     # kics-scan ignore-block
     ports:
       - 443:443/tcp

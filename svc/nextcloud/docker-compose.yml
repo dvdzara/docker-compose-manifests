@@ -2,9 +2,9 @@
 
 # Create a .env file with:
 #
+# POSTGRES_DB=
 # POSTGRES_PASSWORD=
 # POSTGRES_USER=
-# POSTGRES_DB=
 
 # After the `data` volume has been created, it is necessary to run
 # `chown -R 82:82 /var/lib/docker/volumes/nextcloud_data/_data` on the host.

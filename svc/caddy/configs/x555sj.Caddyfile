@@ -5,7 +5,7 @@
 
 dns.zarantonello.dev {
 	encode gzip zstd
-	reverse_proxy adguard:3000
+	reverse_proxy adguard:5300
 }
 
 photos.zarantonello.net {

@@ -1,8 +1,8 @@
 # Create a .env file with:
 #
+# WOODPECKER_AGENT_SECRET=
 # WOODPECKER_GITHUB_CLIENT=
 # WOODPECKER_GITHUB_SECRET=
-# WOODPECKER_AGENT_SECRET=
 
 name: woodpecker-server
 

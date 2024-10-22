@@ -42,10 +42,10 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
-    user: 52892:52892
     tmpfs:
       - /config:uid=52892,gid=52892
       - /data:uid=52892,gid=52892
+    user: 52892:52892
     volumes:
       - nextcloud:/var/www/html:ro
 

@@ -1,6 +1,8 @@
+# SETUP:
+#
 # Create a .env file with:
 #
-# WOODPECKER_AGENT_SECRET=
+# - WOODPECKER_AGENT_SECRET
 
 services:
   woodpecker-agent:

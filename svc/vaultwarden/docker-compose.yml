@@ -1,12 +1,14 @@
 # kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
 
+# SETUP:
+#
 # Create a .env file with:
 #
-# ADMIN_TOKEN=
-# PUSH_INSTALLATION_ID=
-# PUSH_INSTALLATION_KEY=
-# SMTP_PASSWORD=
-# SMTP_USERNAME=
+# - ADMIN_TOKEN
+# - PUSH_INSTALLATION_ID
+# - PUSH_INSTALLATION_KEY
+# - SMTP_PASSWORD
+# - SMTP_USERNAME
 
 networks:
   caddy_default:

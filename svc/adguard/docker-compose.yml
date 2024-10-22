@@ -1,5 +1,9 @@
 # kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
 
+# SETUP:
+#
+# Connect to the web interface and follow instructions from there.
+
 services:
   adguard:
     # kics-scan ignore-block

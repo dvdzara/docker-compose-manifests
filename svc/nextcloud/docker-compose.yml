@@ -6,9 +6,8 @@
 # POSTGRES_USER=
 # POSTGRES_DB=
 
-# After the `data` volume has been created, it is necessary to run 
-# `chown -R 82:82 /var/lib/docker/volumes/nextcloud_data/_data`
-# on the host machine.
+# After the `data` volume has been created, it is necessary to run
+# `chown -R 82:82 /var/lib/docker/volumes/nextcloud_data/_data` on the host.
 
 # Refer to `../caddy/configs/x555sj.Caddyfile` for the php-fpm config.
 

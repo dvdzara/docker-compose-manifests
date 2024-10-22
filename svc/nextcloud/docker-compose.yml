@@ -1,13 +1,16 @@
 # kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
 
+# SETUP:
+#
 # Create a .env file with:
 #
 # POSTGRES_DB=
 # POSTGRES_PASSWORD=
 # POSTGRES_USER=
-
-# After the `data` volume has been created, it is necessary to run
-# `chown -R 82:82 /var/lib/docker/volumes/nextcloud_data/_data` on the host.
+#
+# Only the first time, run `docker compose create` to create volumes but don't 
+# start containers. Then run `chown -R 82:82 /var/lib/docker/volumes/nextcloud_data/ _data`
+# and after that `docker compose up -d`
 
 # Refer to `../caddy/configs/x555sj.Caddyfile` for the php-fpm config.
 

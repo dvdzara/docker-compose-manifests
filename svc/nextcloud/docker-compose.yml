@@ -49,6 +49,7 @@ services:
     volumes:
       - nextcloud:/var/www/html:ro
 
+  # kics-scan ignore-block
   chown-volumes:
     entrypoint:
       - sh

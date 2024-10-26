@@ -5,7 +5,6 @@
 		trusted_proxies static 172.16.0.0/12
 		client_ip_headers CF-Connecting-IP
 	}
-
 }
 
 :3000 {

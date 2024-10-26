@@ -2,16 +2,14 @@
 
 steps:
   - commands:
-      - npm config --global set progress false
-      - npm config --global set cache /cache/npm
-      - npx "prettier@$PRETTIER_VERSION" --check .
+      - bun x "prettier@$PRETTIER_VERSION" --check .
     environment:
       # renovate: datasource=npm depName=prettier versioning=npm
       PRETTIER_VERSION: 3.3.3
-    image: docker.io/library/node:23.1.0-bookworm@sha256:840dad0077213cadd2d734d542ae11cd0f648200be29504eb1b6e2c995d2b75a
+    image: docker.io/oven/bun:1.1.33-slim@sha256:fac38fc9f43345a8dea1f354c3e8976f0a7610050049d12d72bab335ea4905e6
     name: check-prettier
     volumes:
-      - wp-cache_global_npm:/cache/npm
+      - wp-cache_global_bun:/root/.bun/install/cache/
 
 when:
   - event: pull_request

@@ -2,12 +2,12 @@
 
 steps:
   - commands:
-      - bun x "prettier@PRETTIER_VERSION" --check .
+      - bun x "prettier@$PRETTIER_VERSION" --check .
     environment:
       # renovate: datasource=npm depName=prettier versioning=npm
       PRETTIER_VERSION: 3.3.3
     image: docker.io/oven/bun:1.1.33-slim@sha256:fac38fc9f43345a8dea1f354c3e8976f0a7610050049d12d72bab335ea4905e6
-    name: check-markdownlint-cli2
+    name: check-prettier
     volumes:
       - wp-cache_global_bun:/root/.bun/install/cache/
 

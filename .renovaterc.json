@@ -1,37 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "configMigration": true,
-  "dependencyDashboard": true,
-  "extends": ["config:best-practices", "customManagers:dockerfileVersions"],
-  "osvVulnerabilityAlerts": true,
-  "packageRules": [
-    {
-      "matchFileNames": [".devcontainer/**"],
-      "groupName": "devcontainer",
-      "groupSlug": "devcontainer",
-      "automerge": true
-    },
-    {
-      "matchManagers": ["woodpecker"],
-      "groupName": "woodpecker",
-      "groupSlug": "woodpecker",
-      "automerge": true
-    },
-    {
-      "matchPackageNames": ["ghcr.io/immich-app/*"],
-      "groupSlug": "immich",
-      "groupName": "immich"
-    }
-  ],
-  "semanticCommits": "enabled",
   "assignees": ["dvdzara"],
+  "configMigration": true,
   "customManagers": [
     {
       "customType": "regex",
       "fileMatch": ["^\\.woodpecker(?:/[^/]+)?\\.ya?ml$"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>[^\\s]+?)(?: (lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s(?:ENV|ARG)\\s+[A-Za-z0-9_]+?_VERSION[ =][\"']?(?<currentValue>.+?)[\"']?\\s"
+        "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>[^\\s]+?)(?: (?:packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s+[A-Za-z0-9_]+?_VERSION\\s*:\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
       ]
+    }
+  ],
+  "dependencyDashboard": true,
+  "extends": ["config:best-practices", "customManagers:dockerfileVersions"],
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "automerge": true,
+      "matchManagers": ["woodpecker", "devcontainer"]
+    },
+    {
+      "automerge": true,
+      "matchDepTypes": ["devDependencies"]
+    },
+    {
+      "matchPackageNames": ["ghcr.io/immich-app/*"],
+      "groupSlug": "immich",
+      "groupName": "immich"
     }
   ]
 }

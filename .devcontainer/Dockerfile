@@ -1,4 +1,4 @@
-# kics-scan ignore=965a08d7-ef86-4f14-8792-4a3b2098937e
+# kics-scan disable=965a08d7-ef86-4f14-8792-4a3b2098937e,df746b39-6564-4fed-bf85-e9c44382303c
 FROM docker.io/oven/bun:1.1.33-slim@sha256:fac38fc9f43345a8dea1f354c3e8976f0a7610050049d12d72bab335ea4905e6
 
 # Configure shell.

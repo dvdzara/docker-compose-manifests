@@ -17,7 +17,7 @@
   "packageRules": [
     {
       "automerge": true,
-      "matchManagers": ["woodpecker", "devcontainer"]
+      "matchFileNames": [".woodpecker/*", ".devcontainer/*"]
     },
     {
       "automerge": true,

@@ -12,7 +12,4 @@
     }
   },
   "name": "docker-compose-manifests",
-  "postStartCommand": {
-    "bun install": "bun install"
-  }
 }

@@ -7,9 +7,9 @@
       "extensions": [
         "DavidAnson.vscode-markdownlint",
         "esbenp.prettier-vscode",
-        "redhat.vscode-yaml",
+        "redhat.vscode-yaml"
       ]
     }
   },
-  "name": "docker-compose-manifests",
+  "name": "docker-compose-manifests"
 }

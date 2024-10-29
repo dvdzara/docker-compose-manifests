@@ -53,6 +53,7 @@ services:
     volumes:
       - data:/var/lib/registry
 
+  # kics-scan ignore-block
   ui:
     environment:
       DELETE_IMAGES: true

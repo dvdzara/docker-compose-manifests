@@ -6,9 +6,28 @@ networks:
   default: {}
 
 services:
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 28361:28361 /volumes/data && chown -R 26418:26418 /volumes/redis
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - data:/volumes/data
+      - redis:/volumes/redis
+
   redis:
     cap_drop:
       - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     healthcheck:
       interval: 10s
       retries: 5
@@ -24,7 +43,7 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
-    user: 24056:24056
+    user: 26418:26418
     volumes:
       - redis:/data
 
@@ -32,6 +51,8 @@ services:
     cap_drop:
       - ALL
     depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
       redis:
         condition: service_healthy
     environment:

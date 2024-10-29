@@ -39,7 +39,7 @@ services:
       REGISTRY_REDIS_ADDR: redis:6379
       REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR: redis
       REGISTRY_STORAGE_DELETE_ENABLED: true
-    image: docker.io/library/registry:2.8.3
+    image: docker.io/library/registry:2.8.3@sha256:ac0192b549007e22998eb74e8d8488dcfe70f1489520c3b144a6047ac5efbe90
     networks:
       caddy_default:
         aliases:
@@ -60,7 +60,7 @@ services:
       NGINX_PROXY_PASS_URL: http://registry:5000
       PULL_URL: registry.zarantonello.dev
       SINGLE_REGISTRY: true
-    image: docker.io/joxit/docker-registry-ui:2.5.7
+    image: docker.io/joxit/docker-registry-ui:2.5.7@sha256:5594b76bf8dd9de479648e28f38572d020d260568be40b7e52b9758b442275e1
     networks:
       caddy_default:
         aliases:

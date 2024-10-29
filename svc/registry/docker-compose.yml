@@ -35,10 +35,10 @@ services:
       redis:
         condition: service_healthy
     environment:
-      REGISTRY_STORAGE_DELETE_ENABLED: true
-      REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR: redis
       REGISTRY_HTTP_HOST: https://registry.zarantonello.dev
       REGISTRY_REDIS_ADDR: redis:6379
+      REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR: redis
+      REGISTRY_STORAGE_DELETE_ENABLED: true
     image: docker.io/library/registry:2.8.3
     networks:
       caddy_default:

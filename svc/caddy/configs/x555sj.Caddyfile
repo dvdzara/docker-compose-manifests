@@ -22,3 +22,13 @@ vault.zarantonello.net {
 	encode gzip zstd
 	reverse_proxy vaultwarden:3000
 }
+
+registry.zarantonello.dev {
+	encode gzip zstd
+
+	handle /v2/* {
+		reverse_proxy registry:5000
+	}
+
+	reverse_proxy registry_ui:80
+}

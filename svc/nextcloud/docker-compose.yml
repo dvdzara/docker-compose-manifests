@@ -75,7 +75,7 @@ services:
       - sh
       - -c
       - while true ; do php -f /var/www/html/cron.php && sleep 300 ; done
-    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:65bd3faa0eac9e94844b992a4463ffdf66af4aab677e2cd8e82479cee881a9de
+    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:7df8a9ff86107ccbc96e28ffbd8a9ec9f6f5d7e345d46414947c7628eb9cb766
     networks:
       - default
     read_only: true
@@ -98,7 +98,7 @@ services:
     entrypoint:
       - /var/www/html/custom_apps/notify_push/bin/x86_64/notify_push
       - /var/www/html/config/config.php
-    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:65bd3faa0eac9e94844b992a4463ffdf66af4aab677e2cd8e82479cee881a9de
+    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:7df8a9ff86107ccbc96e28ffbd8a9ec9f6f5d7e345d46414947c7628eb9cb766
     networks:
       - default
     read_only: true
@@ -127,7 +127,7 @@ services:
       OVERWRITEPROTOCOL: https
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:65bd3faa0eac9e94844b992a4463ffdf66af4aab677e2cd8e82479cee881a9de
+    image: docker.io/library/nextcloud:30.0.1-fpm-alpine@sha256:7df8a9ff86107ccbc96e28ffbd8a9ec9f6f5d7e345d46414947c7628eb9cb766
     networks:
       - default
     restart: always

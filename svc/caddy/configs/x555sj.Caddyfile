@@ -32,3 +32,8 @@ registry.zarantonello.dev {
 
 	reverse_proxy registry_ui:80
 }
+
+komodo.zarantonello.net {
+	encode gzip zstd
+	reverse_proxy komodo-server:9120
+}

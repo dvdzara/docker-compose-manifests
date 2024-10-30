@@ -1,0 +1,101 @@
+# SETUP:
+#
+# Create a .env file with:
+#
+# - KOMODO_JWT_SECRET
+# - KOMODO_GITHUB_OAUTH_ID
+# - KOMODO_GITHUB_OAUTH_SECRET
+# - KOMODO_WEBHOOK_SECRET
+
+networks:
+  caddy_default:
+    external: true
+  cloudflared_default:
+    external: true
+  default: {}
+
+services:
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 42662:42662 /volumes/ferretdb && chown -R 34106:34106 /volumes/actions /volumes/repos /volumes/syncs
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - actions:/volumes/actions
+      - ferretdb:/volumes/ferretdb
+      - repos:/volumes/repos
+      - syncs:/volumes/syncs
+
+  ferretdb:
+    cap_drop:
+      - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
+    environment:
+      - FERRETDB_HANDLER=sqlite
+    image: ghcr.io/ferretdb/ferretdb:1.24.0
+    labels:
+      komodo.skip: true
+    networks:
+      - default
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 42662:42662
+    volumes:
+      - ferretdb:/state
+
+  komodo-server:
+    cap_drop:
+      - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
+      ferretdb:
+        condition: service_started
+    env_file: .env
+    environment:
+      KOMODO_ACTION_DIRECTORY: /data/action-cache
+      KOMODO_DATABASE_ADDRESS: ferretdb
+      KOMODO_DISABLE_NON_ADMIN_CREATE: true
+      KOMODO_DISABLE_USER_REGISTRATION: true
+      KOMODO_GITHUB_OAUTH_ENABLED: true
+      KOMODO_HOST: https://komodo.zarantonello.net
+      KOMODO_REPO_DIRECTORY: /data/repo-cache
+      KOMODO_SYNC_DIRECTORY: /data/syncs
+    image: ghcr.io/mbecker20/komodo:1.16.6
+    # Prevent Komodo from stopping with StopAllContainers
+    labels:
+      komodo.skip: true
+    networks:
+      caddy_default:
+        aliases:
+          - komodo-server
+      cloudflared_default:
+        aliases:
+          - komodo-server
+      default: {}
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 34106:34106
+    volumes:
+      - repos:/data/repo-cache
+      - syncs:/data/syncs
+      - actions:/data/action-cache
+
+volumes:
+  actions: {}
+  ferretdb: {}
+  repos: {}
+  syncs: {}

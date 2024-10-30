@@ -6,8 +6,6 @@
 # - WOODPECKER_GITHUB_CLIENT
 # - WOODPECKER_GITHUB_SECRET
 
-name: woodpecker-server
-
 networks:
   cloudflared_default:
     external: true

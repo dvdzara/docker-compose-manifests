@@ -1,9 +1,14 @@
+# This configuration assumes that caddy is running behind cloudflared.
+
+
 {
 	admin off
 	auto_https off
 	servers {
-		trusted_proxies static 172.16.0.0/12
+		# It is especially important to modify the client_ip_headers and trusted_proxies
+		# settings to match those passed by your reverse proxy.
 		client_ip_headers CF-Connecting-IP
+		trusted_proxies static 172.16.0.0/12
 	}
 }
 
@@ -40,5 +45,5 @@
 
 	file_server
 	root * /var/www/html
-	php_fastcgi nextcloud_server:9000
+	php_fastcgi nextcloud:9000
 }

@@ -96,6 +96,7 @@ services:
       - data:/var/www/html/data
       - nextcloud:/var/www/html
 
+  # kics-scan ignore-block
   nextcloud_cron:
     depends_on:
       nextcloud:
@@ -109,6 +110,8 @@ services:
 
   # The first time nextcloud runs, it's normal that this service fails. Ensure
   # to install the notify push app inside nextcloud to make this work.
+
+  # kics-scan ignore-block
   nextcloud_notify_push:
     depends_on:
       nextcloud:

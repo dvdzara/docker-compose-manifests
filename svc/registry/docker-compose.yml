@@ -74,6 +74,17 @@ services:
     volumes:
       - data:/var/lib/registry
 
+  registry_garbage_collect:
+    depends_on:
+      registry:
+        condition: service_started
+    entrypoint:
+      - sh
+      - -c
+      - while true ; do registry garbage-collect -m /etc/docker/registry/config.yml && sleep 600 ; done
+    extends:
+      service: registry
+
   # kics-scan ignore-block
   ui:
     environment:

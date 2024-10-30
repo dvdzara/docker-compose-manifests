@@ -1,0 +1,52 @@
+services:
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 17746:17746 /volumes/repos /volumes/stacks
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - /srv/komodo/repos:/volumes/repos
+      - /srv/komodo/stacks:/volumes/stacks
+
+  komodo-periphery:
+    cap_drop:
+      - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
+    environment:
+      PERIPHERY_REPO_DIR: /srv/komodo/repos
+      # Encryption provided by tailscale.
+      PERIPHERY_SSL_ENABLED: false
+      PERIPHERY_STACK_DIR: /srv/komodo/stacks
+    # Add to docker group to use the docker socket.
+    group_add:
+      - "993"
+    # Used in services like caddy, which loads different configurations based on
+    # the hostname of the server.
+    hostname: ${HOSTNAME}
+    image: ghcr.io/mbecker20/periphery:1.16.6
+    # Prevent Komodo from stopping with StopAllContainers
+    labels:
+      komodo.skip: true
+    # kics-scan ignore-line
+    ports:
+      - 8120:8120
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 17746:17746
+    # kics-scan ignore-block
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:z
+      - /srv/komodo/repos:/srv/komodo/repos:z
+      - /srv/komodo/stacks:/srv/komodo/stacks:z
+      - /proc:/proc

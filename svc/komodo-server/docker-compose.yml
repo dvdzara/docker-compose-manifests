@@ -2,7 +2,6 @@
 #
 # Create a .env file with:
 #
-# - KOMODO_PASSKEY
 # - KOMODO_JWT_SECRET
 # - KOMODO_GITHUB_OAUTH_ID
 # - KOMODO_GITHUB_OAUTH_SECRET
@@ -16,6 +15,7 @@ networks:
   default: {}
 
 services:
+  # kics-scan ignore-block
   chown-volumes:
     entrypoint:
       - sh
@@ -64,14 +64,14 @@ services:
         condition: service_started
     env_file: .env
     environment:
-      KOMODO_HOST: https://komodo.zarantonello.net
-      KOMODO_SYNC_DIRECTORY: /data/syncs
-      KOMODO_REPO_DIRECTORY: /data/repo-cache
       KOMODO_ACTION_DIRECTORY: /data/action-cache
-      KOMODO_DISABLE_USER_REGISTRATION: true
-      KOMODO_DISABLE_NON_ADMIN_CREATE: true
-      KOMODO_GITHUB_OAUTH_ENABLED: true
       KOMODO_DATABASE_ADDRESS: ferretdb
+      KOMODO_DISABLE_NON_ADMIN_CREATE: true
+      KOMODO_DISABLE_USER_REGISTRATION: true
+      KOMODO_GITHUB_OAUTH_ENABLED: true
+      KOMODO_HOST: https://komodo.zarantonello.net
+      KOMODO_REPO_DIRECTORY: /data/repo-cache
+      KOMODO_SYNC_DIRECTORY: /data/syncs
     image: ghcr.io/mbecker20/komodo:1.16.6
     # Prevent Komodo from stopping with StopAllContainers
     labels:

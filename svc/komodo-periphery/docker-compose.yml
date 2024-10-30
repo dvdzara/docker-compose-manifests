@@ -22,12 +22,12 @@ services:
       chown-volumes:
         condition: service_completed_successfully
     environment:
+      # Gives the correct size for server disk space.
+      PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
       PERIPHERY_REPO_DIR: /tmp/komodo/repos
       # Encryption provided by tailscale.
       PERIPHERY_SSL_ENABLED: false
       PERIPHERY_STACK_DIR: /tmp/komodo/stacks
-      ## Gives the correct size for server disk space.
-      PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
     # Add to docker group to use the docker socket.
     group_add:
       - "993"

@@ -25,6 +25,8 @@ services:
       # Used to save custom changes to docker-compose files.
       GIT_AUTHOR_EMAIL: komodo-periphery@localhost
       GIT_AUTHOR_NAME: komodo-periphery
+      GIT_COMMITTER_EMAIL: komodo-periphery@localhost
+      GIT_COMMITTER_NAME: komodo-periphery
       # Gives the correct size for server disk space.
       PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
       PERIPHERY_REPO_DIR: /tmp/komodo/repos

@@ -27,3 +27,8 @@ komodo.zarantonello.net {
 	encode gzip zstd
 	reverse_proxy komodo-server:9120
 }
+
+igl.zarantonello.dev {
+	encode gzip zstd
+	reverse_proxy igl_frontend:3000
+}

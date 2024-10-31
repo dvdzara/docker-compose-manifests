@@ -50,6 +50,9 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
+    tmpfs:
+      # Used to store credentials for cloning private docker images.
+      - /.docker:uid=17746,gid=17746
     user: 17746:17746
     # kics-scan ignore-block
     volumes:

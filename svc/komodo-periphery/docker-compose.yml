@@ -12,8 +12,8 @@ services:
       - no-new-privileges:true
     user: 0:0
     volumes:
-      - /tmp/komodo/repos:/volumes/repos
-      - /tmp/komodo/stacks:/volumes/stacks
+      - /var/lib/komodo/repos:/volumes/repos
+      - /var/lib/komodo/stacks:/volumes/stacks
 
   komodo-periphery:
     cap_drop:
@@ -29,10 +29,10 @@ services:
       GIT_COMMITTER_NAME: komodo-periphery
       # Gives the correct size for server disk space.
       PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
-      PERIPHERY_REPO_DIR: /tmp/komodo/repos
+      PERIPHERY_REPO_DIR: /var/lib/komodo/repos
       # Encryption provided by tailscale.
       PERIPHERY_SSL_ENABLED: false
-      PERIPHERY_STACK_DIR: /tmp/komodo/stacks
+      PERIPHERY_STACK_DIR: /var/lib/komodo/stacks
     # Add to docker group to use the docker socket.
     group_add:
       - "993"
@@ -50,7 +50,7 @@ services:
     user: 17746:17746
     # kics-scan ignore-block
     volumes:
-      - /tmp/komodo/repos:/tmp/komodo/repos:z
-      - /tmp/komodo/stacks:/tmp/komodo/stacks:z
+      - /var/lib/komodo/repos:/var/lib/komodo/repos:z
+      - /var/lib/komodo/stacks:/var/lib/komodo/stacks:z
       - /proc:/proc
       - /var/run/docker.sock:/var/run/docker.sock:z

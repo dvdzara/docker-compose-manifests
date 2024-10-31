@@ -84,6 +84,8 @@ services:
       - while true ; do registry garbage-collect -m /etc/docker/registry/config.yml && sleep 600 ; done
     extends:
       service: registry
+    networks:
+      - default
 
   # kics-scan ignore-block
   ui:

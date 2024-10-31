@@ -10,7 +10,7 @@ services:
       - ALL
     env_file: .env
     environment:
-      WOODPECKER_SERVER: x555sj.gentoo-sargas.ts.net:9000
+      WOODPECKER_SERVER: 100.106.32.89:9000
     # Add to docker group to use the docker socket.
     group_add:
       - "993"

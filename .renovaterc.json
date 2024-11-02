@@ -20,10 +20,6 @@
       "matchFileNames": [".woodpecker/*", ".devcontainer/*"]
     },
     {
-      "automerge": true,
-      "matchDepTypes": ["devDependencies"]
-    },
-    {
       "matchPackageNames": ["ghcr.io/immich-app/*"],
       "groupSlug": "immich",
       "groupName": "immich"

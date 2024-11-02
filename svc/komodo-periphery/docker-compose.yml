@@ -39,7 +39,7 @@ services:
     # Used by services like caddy that load different configs based on server
     # hostname.
     hostname: ${HOSTNAME}
-    image: ghcr.io/mbecker20/periphery:1.16.7@sha256:b03a2a942fbfc1ac3cfeb035ff0a4e9ecca845956be29579790a1d5721658570
+    image: ghcr.io/mbecker20/periphery:1.16.8@sha256:80efe4ed985a093843b733dfbb1fe0a7268a75f744816dfa41fcf2fe4acf7583
     # Prevent Komodo from stopping with StopAllContainers
     labels:
       komodo.skip: true

@@ -28,6 +28,11 @@
       "matchPackageNames": ["ghcr.io/mbecker20/*"],
       "groupSlug": "komodo",
       "groupName": "komodo"
+    },
+    {
+      "matchPackageNames": ["docker.io/woodpeckerci/*"],
+      "groupSlug": "woodpecker",
+      "groupName": "woodpecker"
     }
   ]
 }

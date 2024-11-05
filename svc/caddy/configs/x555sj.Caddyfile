@@ -30,5 +30,12 @@ komodo.zarantonello.net {
 
 igl.zarantonello.dev {
 	encode gzip zstd
+
+	# Emulate these headers until website is moved to cloudflared.
+	header {
+		CF-IPCountry IT;
+		CF-Connecting-IP 127.0.0.1;
+	}
+	
 	reverse_proxy igl_frontend:3000
 }

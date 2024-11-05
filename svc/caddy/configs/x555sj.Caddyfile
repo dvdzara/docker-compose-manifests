@@ -34,6 +34,6 @@ igl.zarantonello.dev {
 	reverse_proxy igl_frontend:3000 {
 		# Emulate these headers until website is moved to cloudflared.
 		header_up +CF-IPCountry "IT"
-		header_up +CF-Client-IP "127.0.0.1"
+		header_up +CF-Connecting-IP "127.0.0.1"
 	}
 }

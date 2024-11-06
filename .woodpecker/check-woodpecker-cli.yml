@@ -3,7 +3,7 @@
 steps:
   - commands:
       - woodpecker-cli lint
-    image: docker.io/woodpeckerci/woodpecker-cli:v2.7.2-alpine@sha256:6d50d297d0ea89d8b2d73d5f15511f521298aa2e1780faafa415540064e1d59f
+    image: docker.io/woodpeckerci/woodpecker-cli:v2.7.3-alpine@sha256:0a71a2c8b9761846c42a5ad5731564b3ee7ecb26ddb03f344e0f1505fa09a11d
     name: check-woodpecker-cli
 
 when:

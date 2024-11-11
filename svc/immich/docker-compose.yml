@@ -12,9 +12,29 @@ networks:
   default: {}
 
 services:
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 5551:5551 /volumes/data chown -R 8723:8723 /volumes/machine-learning-cache && chown -R 70:70 /volumes/postgres
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - data:/volumes/data
+      - machine-learning-cache:/volumes/machine-learning-cache
+      - postgres:/volumes/postgres
+
   immich-machine-learning:
     cap_drop:
       - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     image: ghcr.io/immich-app/immich-machine-learning:v1.120.1@sha256:0a5d8d75f026342a56e1065613e565ec40a05f4042dc7fead1dcfd66d539fef3
     networks:
       - default
@@ -28,10 +48,13 @@ services:
     user: 8723:8723
     volumes:
       - machine-learning-cache:/cache
+
   immich-server:
     cap_drop:
       - ALL
     depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:
@@ -49,18 +72,19 @@ services:
         aliases:
           - immich
       default: {}
-    ports:
-      # Used for connecting the app, since there is already tailscale encryption.
-      - 100.106.32.89:2283:2283
     restart: always
     security_opt:
       - no-new-privileges:true
     user: 5551:5551
     volumes:
       - data:/usr/src/app/upload
+
   postgres:
     cap_drop:
       - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     env_file: .env
     healthcheck:
       interval: 10s
@@ -78,11 +102,12 @@ services:
     security_opt:
       - no-new-privileges:true
     tmpfs:
-      - /tmp:uid=19166,gid=19166
-      - /var/run/postgresql:uid=19166,gid=19166
-    user: 19166:19166
+      - /tmp:uid=70,gid=70
+      - /var/run/postgresql:uid=70,gid=70
+    user: 70:70
     volumes:
       - postgres:/var/lib/postgresql/data
+
   redis:
     cap_drop:
       - ALL

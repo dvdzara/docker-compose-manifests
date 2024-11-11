@@ -54,7 +54,7 @@ services:
     entrypoint:
       - sh
       - -c
-      - chown -R 82:82 /volumes/data && chown -R 24056:24056 /volumes/redis
+      - chown -R 82:82 /volumes/data && chown -R 24056:24056 /volumes/redis && chown -R 70:70 /volumes/postgres
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
     read_only: true
     restart: "no"
@@ -64,6 +64,7 @@ services:
     volumes:
       - data:/volumes/data
       - redis:/volumes/redis
+      - postgres:/volumes/postgres
 
   nextcloud:
     cap_drop:

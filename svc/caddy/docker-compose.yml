@@ -24,6 +24,9 @@ services:
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     env_file: .env
     extra_hosts:
       - adguard:host-gateway
@@ -42,6 +45,21 @@ services:
     user: 41380:41380
     volumes:
       - data:/data
+
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 41380:41380 /volumes/data
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - data:/volumes/data
 
 volumes:
   data: {}

@@ -5,12 +5,31 @@ networks:
     external: true
 
 services:
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 50788:50788 /volumes/data /volumes/database
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - data:/volumes/data
+      - database:/volumes/database
+
   filebrowser:
     cap_drop:
       - ALL
     command:
       - --database=/database/db
       - --port=3000
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     image: docker.io/filebrowser/filebrowser:v2.31.2@sha256:a4da9ca8364b0a1fc5dd36f7add92582bf673c0ae0bda8dd9bd13062c41d1715
     networks:
       caddy_default:

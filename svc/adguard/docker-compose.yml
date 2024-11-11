@@ -11,6 +11,9 @@ services:
       - NET_BIND_SERVICE
     cap_drop:
       - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     image: docker.io/adguard/adguardhome:v0.107.54@sha256:ec59d9d8d083b74620f827879bee7ad88621f96bc0c4347c84c176ffa349484c
     network_mode: host
     read_only: true
@@ -21,6 +24,22 @@ services:
     volumes:
       - config:/opt/adguardhome/conf
       - data:/opt/adguardhome/work
+
+  # kics-scan ignore-block
+  chown-volumes:
+    entrypoint:
+      - sh
+      - -c
+      - chown -R 58442:58442 /volumes/config /volumes/data
+    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    read_only: true
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    user: 0:0
+    volumes:
+      - config:/volumes/config
+      - data:/volumes/data
 
 volumes:
   config: {}

@@ -12,8 +12,8 @@ services:
       - no-new-privileges:true
     user: 0:0
     volumes:
-      - /var/lib/komodo/repos:/volumes/repos
-      - /var/lib/komodo/stacks:/volumes/stacks
+      - /var/lib/komodo/repos:/volumes/repos:z
+      - /var/lib/komodo/stacks:/volumes/stacks:z
 
   komodo-periphery:
     cap_drop:

@@ -17,7 +17,7 @@ services:
     entrypoint:
       - sh
       - -c
-      - chown -R 5551:5551 /volumes/data chown -R 8723:8723 /volumes/machine-learning-cache && chown -R 70:70 /volumes/postgres
+      - chown -R 5551:5551 /volumes/data && chown -R 8723:8723 /volumes/machine-learning-cache && chown -R 70:70 /volumes/postgres
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
     read_only: true
     restart: "no"

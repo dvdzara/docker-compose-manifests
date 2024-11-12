@@ -32,7 +32,7 @@ services:
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
-    image: docker.io/library/caddy:2.8.4-alpine@sha256:33937b9d51461ea87794350c1c09ce53f327802508929d78f3b5642533f2f7db
+    image: docker.io/library/caddy:2.8.4-alpine@sha256:54e9c7289f80701f1df5bc8236b25b740f598f51f1bbdba250f2335aadd6bccd
     networks:
       cloudflared_default:
         aliases:
@@ -134,7 +134,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.0-alpine@sha256:14195b0729fce792f47ae3c3704d6fd04305826d57af3b01d5b4d004667df174
+    image: docker.io/library/postgres:17.0-alpine@sha256:3d5a60633216631bf980dc412f20b864563c60733a966dd2eb33bf30f0106b03
     networks:
       - default
     read_only: true

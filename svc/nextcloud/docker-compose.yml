@@ -32,7 +32,7 @@ services:
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
-    image: docker.io/library/caddy:2.8.4-alpine@sha256:54e9c7289f80701f1df5bc8236b25b740f598f51f1bbdba250f2335aadd6bccd
+    image: docker.io/library/caddy:2.8.4-alpine@sha256:5d4e02f275d12136a8e0a487e765ce459a00d49e23b543e9cd8190562ec5d27b
     networks:
       cloudflared_default:
         aliases:
@@ -84,7 +84,7 @@ services:
       OVERWRITEPROTOCOL: https
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.2-fpm-alpine@sha256:1606361b219c60dad3c77afb63460328bee6627c50302e3af3d5e7e9b87b8415
+    image: docker.io/library/nextcloud:30.0.2-fpm-alpine@sha256:d79083e7ecc89f0b4d56d8222577b79b1f1968afcf3ee0e4d5c9dc7bd13f4766
     networks:
       - default
     restart: always
@@ -134,7 +134,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.0-alpine@sha256:3d5a60633216631bf980dc412f20b864563c60733a966dd2eb33bf30f0106b03
+    image: docker.io/library/postgres:17.0-alpine@sha256:d388be15cfb665c723da47cccdc7ea5c003ed71f700c5419bbd075033227ce1f
     networks:
       - default
     read_only: true

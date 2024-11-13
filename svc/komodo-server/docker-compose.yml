@@ -73,7 +73,7 @@ services:
       KOMODO_REPO_DIRECTORY: /data/repo-cache
       KOMODO_SYNC_DIRECTORY: /data/syncs
       KOMODO_WEBHOOK_BASE_URL: https://komodo-webhooks.zarantonello.net
-    image: ghcr.io/mbecker20/komodo:1.16.10@sha256:9906a852098f5dfd2777095b3f03d4c39b325221d8faa3b3f984ea4a4dc1f156
+    image: ghcr.io/mbecker20/komodo:1.16.10@sha256:51f059a1810bae964556c2cfb8a26eb1a47c7043a821c45ae66fe04c8f8fc4ba
     # Prevent Komodo from stopping with StopAllContainers
     labels:
       komodo.skip: true

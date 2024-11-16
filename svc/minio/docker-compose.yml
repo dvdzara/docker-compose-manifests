@@ -37,7 +37,7 @@ services:
       - server
     depends_on:
       chown-volumes:
-        condition: service_healthy
+        condition: service_completed_successfully
     env_file: .env
     environment:
       - MINIO_VOLUMES=/mnt/disk1 /mnt/disk2 /mnt/disk3 /mnt/disk4

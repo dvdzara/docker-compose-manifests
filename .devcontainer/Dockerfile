@@ -1,3 +1,5 @@
+# kics-scan disable=d3499f6d-1651-41bb-a9a7-de925fea487b
+
 FROM docker.io/library/alpine:3.20.3
 
 # hadolint ignore=DL3018

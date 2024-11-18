@@ -1,23 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "assignees": ["dvdzara"],
-  "configMigration": true,
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": ["^\\.woodpecker(?:/[^/]+)?\\.ya?ml$"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>[^\\s]+?)(?: (?:packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s+[A-Za-z0-9_]+?_VERSION\\s*:\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
-      ]
-    }
+  "extends": [
+    ":semanticCommits",
+    "config:best-practices",
+    "customManagers:githubActionsVersions",
+    "customManagers:dockerfileVersions"
   ],
-  "dependencyDashboard": true,
-  "extends": ["config:best-practices", "customManagers:dockerfileVersions"],
-  "semanticCommits": "enabled",
   "packageRules": [
     {
       "automerge": true,
-      "matchFileNames": [".woodpecker/*", ".devcontainer/*"]
+      "matchManagers": ["github-actions", "devcontainer"]
     },
     {
       "matchPackageNames": ["ghcr.io/immich-app/*"],
@@ -28,11 +21,6 @@
       "matchPackageNames": ["ghcr.io/mbecker20/*"],
       "groupSlug": "komodo",
       "groupName": "komodo"
-    },
-    {
-      "matchPackageNames": ["docker.io/woodpeckerci/*"],
-      "groupSlug": "woodpecker",
-      "groupName": "woodpecker"
     }
   ]
 }

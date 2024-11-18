@@ -4,13 +4,13 @@
   "extends": [
     ":semanticCommits",
     "config:best-practices",
-    "customManagers:githubActionsVersions",
-    "customManagers:dockerfileVersions"
+    "customManagers:dockerfileVersions",
+    "customManagers:githubActionsVersions"
   ],
   "packageRules": [
     {
       "automerge": true,
-      "matchManagers": ["github-actions", "devcontainer"]
+      "matchFileNames": [".github/workflows/**", ".devcontainer/**"]
     },
     {
       "matchPackageNames": ["ghcr.io/immich-app/*"],

@@ -86,13 +86,14 @@ services:
       chown-volumes:
         condition: service_completed_successfully
     env_file: .env
+    environment:
+      PGUSER: ${POSTGRES_USER}
     healthcheck:
       interval: 10s
       retries: 5
       test:
         - CMD
         - pg_isready
-        - --username=${POSTGRES_USER}
       timeout: 5s
     image: docker.io/tensorchord/pgvecto-rs:pg16-v0.3.0-rootless@sha256:d125f3aec02bfa66764432eae76e1098a3b0c6f8bf13db38f5af1156499c90b5
     networks:

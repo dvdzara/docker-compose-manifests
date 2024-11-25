@@ -4,18 +4,15 @@
 #
 # Create a .env file with:
 #
+# - OIDC_CLIENT_ID
+# - OIDC_CLIENT_SECRET
 # - POSTGRES_DB
 # - POSTGRES_PASSWORD
 # - POSTGRES_USER
-# - NEXTCLOUD_ADMIN_USER
-# - NEXTCLOUD_ADMIN_PASSWORD
-#
-# Additional configuration can be edited by running
-# `docker compose exec -it nextcloud vi /var/www/html/config/config.php`.
-
-configs:
-  caddyfile:
-    file: Caddyfile
+# - SECRET_KEY
+# - SMTP_PASSWORD
+# - SMTP_USERNAME
+# - UTILS_SECRET
 
 networks:
   cloudflared_default:
@@ -23,38 +20,12 @@ networks:
   default: {}
 
 services:
-  caddy:
-    # kics-scan ignore-block
-    cap_add:
-      - NET_BIND_SERVICE
-    cap_drop:
-      - ALL
-    configs:
-      - source: caddyfile
-        target: /etc/caddy/Caddyfile
-    image: docker.io/library/caddy:2.8.4-alpine@sha256:e97e0e3f8f51be708a9d5fadbbd75e3398c22fc0eecd4b26d48561e3f7daa9eb
-    networks:
-      cloudflared_default:
-        aliases:
-          - nextcloud_caddy
-      default: {}
-    read_only: true
-    restart: always
-    security_opt:
-      - no-new-privileges:true
-    tmpfs:
-      - /config:uid=52892,gid=52892
-      - /data:uid=52892,gid=52892
-    user: 52892:52892
-    volumes:
-      - nextcloud:/var/www/html:ro
-
   # kics-scan ignore-block
   chown-volumes:
     entrypoint:
       - sh
       - -c
-      - chown -R 82:82 /volumes/data && chown -R 24056:24056 /volumes/redis && chown -R 70:70 /volumes/postgres
+      - chown -R 21127:21127 /volumes/data && chown -R 24056:24056 /volumes/redis && chown -R 70:70 /volumes/postgres
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
     read_only: true
     restart: "no"
@@ -66,7 +37,7 @@ services:
       - redis:/volumes/redis
       - postgres:/volumes/postgres
 
-  nextcloud:
+  outline:
     cap_drop:
       - ALL
     depends_on:
@@ -78,50 +49,55 @@ services:
         condition: service_healthy
     env_file: .env
     environment:
-      NEXTCLOUD_TRUSTED_DOMAINS: cloud.zarantonello.dev
-      OVERWRITECLIURL: http://caddy:3000
-      OVERWRITEHOST: cloud.zarantonello.dev
-      OVERWRITEPROTOCOL: https
-      POSTGRES_HOST: postgres
-      REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.2-fpm-alpine@sha256:95bb7df72a20af7510a5f9f7155a1ea845acdbfbe97fb20437ba3cabf5ef7884
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DATABASE}
+      FILE_STORAGE: local
+      OIDC_AUTH_URI: https://gitlab.com/oauth/authorize
+      OIDC_DISABLE_REDIRECT: true
+      OIDC_DISPLAY_NAME: GitLab
+      OIDC_SCOPES: openid email
+      OIDC_TOKEN_URI: https://gitlab.com/oauth/token
+      OIDC_USERINFO_URI: https://gitlab.com/oauth/userinfo
+      OIDC_USERNAME_CLAIM: username
+      PGSSLMODE: disable
+      RATE_LIMITER_ENABLED: true
+      REDIS_URL: redis://redis:6379
+      SMTP_FROM_EMAIL: Outline <outline@zarantonello.dev>
+      SMTP_HOST: smtp.purelymail.com
+      SMTP_PORT: 465
+      URL: https://docs.zarantonello.dev
+    image: docker.io/outlinewiki/outline:0.81.1
+    networks:
+      cloudflared_default:
+        aliases:
+          - outline
+      default: {}
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /.yarn:uid=21127,gid=21127
+    user: 21127:21127
+    volumes:
+      - data:/var/lib/outline/data
+
+  outline-cron:
+    cap_drop:
+      - ALL
+    depends_on:
+      outline:
+        condition: service_started
+    entrypoint:
+      - sh
+      - -c
+      - while true ; do wget http://outline:3000/api/cron.daily?token=${UTILS_SECRET} ; sleep 43200 ; done
+    env_file: .env
+    image: docker.io/library/alpine:3.20.3
     networks:
       - default
     restart: always
     security_opt:
       - no-new-privileges:true
-    tmpfs:
-      - /tmp:uid=82,gid=82
-    user: 82:82
-    volumes:
-      - data:/var/www/html/data
-      - nextcloud:/var/www/html
-
-  # kics-scan ignore-block
-  nextcloud_cron:
-    depends_on:
-      nextcloud:
-        condition: service_started
-    entrypoint:
-      - sh
-      - -c
-      - while true ; do php -f /var/www/html/cron.php && sleep 300 ; done
-    extends:
-      service: nextcloud
-
-  # The first time nextcloud runs, it's normal that this service fails. Ensure
-  # to install the notify push app inside nextcloud to make this work.
-
-  # kics-scan ignore-block
-  nextcloud_notify_push:
-    depends_on:
-      nextcloud:
-        condition: service_started
-    entrypoint:
-      - /var/www/html/custom_apps/notify_push/bin/x86_64/notify_push
-      - /var/www/html/config/config.php
-    extends:
-      service: nextcloud
+    user: 22219:22219
 
   postgres:
     cap_drop:
@@ -177,6 +153,5 @@ services:
 
 volumes:
   data: {}
-  nextcloud: {}
   postgres: {}
   redis: {}

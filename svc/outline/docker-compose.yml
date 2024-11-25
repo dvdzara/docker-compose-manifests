@@ -86,11 +86,11 @@ services:
     depends_on:
       outline:
         condition: service_started
-    env_file: .env
     entrypoint:
       - sh
       - -c
       - while true ; do wget http://outline:3000/api/cron.daily?token=${UTILS_SECRET} ; sleep 43200 ; done
+    env_file: .env
     image: docker.io/library/alpine:3.20.3
     networks:
       - default

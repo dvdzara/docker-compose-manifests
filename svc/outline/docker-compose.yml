@@ -65,7 +65,7 @@ services:
       SMTP_HOST: smtp.purelymail.com
       SMTP_PORT: 465
       URL: https://docs.zarantonello.dev
-    image: docker.io/outlinewiki/outline:0.81.1
+    image: docker.io/outlinewiki/outline:0.81.1@sha256:e539971b59b2523ab54bf792105d1cff6432974a37e18211c175cd053d7feb62
     networks:
       cloudflared_default:
         aliases:
@@ -91,7 +91,7 @@ services:
       - -c
       - while true ; do wget http://outline:3000/api/cron.daily?token=${UTILS_SECRET} ; sleep 43200 ; done
     env_file: .env
-    image: docker.io/library/alpine:3.20.3
+    image: docker.io/library/alpine:3.20.3@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a
     networks:
       - default
     restart: always

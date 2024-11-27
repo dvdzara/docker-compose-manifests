@@ -126,6 +126,9 @@ services:
   postgres:
     cap_drop:
       - ALL
+    depends_on:
+      chown-volumes:
+        condition: service_completed_successfully
     env_file: .env
     environment:
       PGUSER: ${POSTGRES_USER}
@@ -146,6 +149,8 @@ services:
     tmpfs:
       - /tmp:uid=70,gid=70
       - /var/run/postgresql:uid=70,gid=70
+    # User has to be 70, otherwise the container tries to chown the postgres
+    # volume but fails due to insufficient permissions.
     user: 70:70
     volumes:
       - postgres:/var/lib/postgresql/data

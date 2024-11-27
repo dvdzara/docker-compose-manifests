@@ -95,7 +95,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/tensorchord/pgvecto-rs:pg16-v0.3.0-rootless@sha256:d125f3aec02bfa66764432eae76e1098a3b0c6f8bf13db38f5af1156499c90b5
+    image: docker.io/tensorchord/pgvecto-rs:pg17-v0.4.0-rootless@sha256:4cd393763b6802e491846d995261da9756f62b0ad4187dc6274e742677a20dc6
     networks:
       - default
     read_only: true
@@ -105,6 +105,8 @@ services:
     tmpfs:
       - /tmp:uid=70,gid=70
       - /var/run/postgresql:uid=70,gid=70
+    # User has to be 70, otherwise the container tries to chown the postgres
+    # volume but fails due to insufficient permissions.
     user: 70:70
     volumes:
       - postgres:/var/lib/postgresql/data

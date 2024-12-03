@@ -11,7 +11,9 @@ configs:
     file: configs/${HOSTNAME}.Caddyfile
 
 networks:
-  default: {}
+  default:
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "false"
 
 services:
   caddy:
@@ -28,8 +30,6 @@ services:
       chown-volumes:
         condition: service_completed_successfully
     env_file: .env
-    extra_hosts:
-      - adguard:host-gateway
     networks:
       - default
     # kics-scan ignore-block

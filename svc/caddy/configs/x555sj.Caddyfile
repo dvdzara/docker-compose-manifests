@@ -23,11 +23,6 @@ vault.zarantonello.net {
 	reverse_proxy vaultwarden:3000
 }
 
-komodo.zarantonello.net {
-	encode gzip zstd
-	reverse_proxy komodo-server:9120
-}
-
 igl.zarantonello.dev {
 	encode gzip zstd
 

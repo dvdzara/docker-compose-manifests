@@ -1,0 +1,48 @@
+# SETUP:
+#
+# Create .env file with:
+#
+# - CF_DNS_API_TOKEN
+# - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL
+
+configs:
+  traefik:
+    file: ./traefik.yml
+
+services:
+  traefik:
+    cap_drop:
+      - ALL
+    configs:
+      - source: traefik
+        target: /etc/traefik/traefik.yml
+    env_file: .env
+    group_add:
+      - "993"
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test:
+        - CMD
+        - traefik
+        - healthcheck
+      timeout: 5s
+    image: docker.io/library/traefik:v3.2.1@sha256:1a3e33f976d10f45efd613aa64814867068bf51c782599a70ef370447686291b
+    networks:
+      default:
+        aliases:
+          - traefik
+    ports:
+      - 443:1443/tcp
+      - 443:1443/udp
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 51664:51664
+    volumes:
+      - certificates:/var/lib/traefik/certificates
+      - /var/run/docker.sock:/var/run/docker.sock:z
+
+volumes:
+  certificates: {}

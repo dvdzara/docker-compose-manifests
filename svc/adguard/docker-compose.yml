@@ -1,31 +1,27 @@
-# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
-
 # SETUP:
 #
 # Connect to the web interface and follow instructions from there.
 
 networks:
-  caddy_default:
+  traefik_default:
     external: true
 
 services:
   adguard:
-    # kics-scan ignore-block
     cap_add:
       - NET_BIND_SERVICE
     cap_drop:
       - ALL
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     image: docker.io/adguard/adguardhome:v0.107.54@sha256:ec59d9d8d083b74620f827879bee7ad88621f96bc0c4347c84c176ffa349484c
+    labels:
+      traefik.enable: true
+      traefik.http.routers.adguard.rule: Host(`dns.zarantonello.dev`)
+      traefik.http.services.adguard.loadbalancer.server.port: 3000
     networks:
-      caddy_default:
-        aliases:
-          - adguard
+      - traefik_default
     ports:
-      - 100.106.32.89:53:53/tcp
-      - 100.106.32.89:53:53/udp
+      - 100.106.32.89:53:1053/tcp
+      - 100.106.32.89:53:1053/udp
     read_only: true
     restart: always
     security_opt:
@@ -34,22 +30,6 @@ services:
     volumes:
       - config:/opt/adguardhome/conf
       - data:/opt/adguardhome/work
-
-  # kics-scan ignore-block
-  chown-volumes:
-    entrypoint:
-      - sh
-      - -c
-      - chown -R 58442:58442 /volumes/config /volumes/data
-    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
-    read_only: true
-    restart: "no"
-    security_opt:
-      - no-new-privileges:true
-    user: 0:0
-    volumes:
-      - config:/volumes/config
-      - data:/volumes/data
 
 volumes:
   config: {}

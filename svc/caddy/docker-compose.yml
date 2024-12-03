@@ -11,9 +11,7 @@ configs:
     file: configs/${HOSTNAME}.Caddyfile
 
 networks:
-  default:
-    driver_opts:
-      com.docker.network.bridge.enable_ip_masquerade: "false"
+  default: {}
 
 services:
   caddy:

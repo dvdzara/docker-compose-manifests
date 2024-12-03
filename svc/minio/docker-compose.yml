@@ -46,12 +46,12 @@ services:
     image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z-cpuv1@sha256:8d01c1f03e13a216995d9a064f7310a28a978a3d34dd0ed4799247842fcbdc8c
     labels:
       traefik.enable: true
-      traefik.http.routers.minio.rule: Host(`minio.zarantonello.dev`)
-      traefik.http.routers.minio.service: minio
-      traefik.http.services.minio.loadbalancer.server.port: 9000
       traefik.http.routers.minio-dashboard.rule: Host(`minio.zarantonello.dev`) && PathPrefix('/minio')
       traefik.http.routers.minio-dashboard.service: minio-dashboard
+      traefik.http.routers.minio.rule: Host(`minio.zarantonello.dev`)
+      traefik.http.routers.minio.service: minio
       traefik.http.services.minio-dashboard.loadbalancer.server.port: 9001
+      traefik.http.services.minio.loadbalancer.server.port: 9000
     networks:
       - traefik_default
     read_only: true

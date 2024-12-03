@@ -1,12 +1,12 @@
 certificatesResolvers:
   letsencrypt:
     acme:
-      storage: /var/lib/traefik/certificates/acme.json
       dnsChallenge:
         provider: cloudflare
         resolvers:
           - 1.1.1.1:53
           - 1.0.0.1:53
+      storage: /var/lib/traefik/certificates/acme.json
 entryPoints:
   https:
     address: :1443
@@ -29,13 +29,13 @@ global:
   checkNewVersion: false
   sendAnonymousUsage: true
 log:
-  level: INFO
   format: json
+  level: INFO
 metrics:
   prometheus:
     headerLabels:
-      useragent: User-Agent
       cfcountry: CF-IPCountry
+      useragent: User-Agent
 ping: {}
 providers:
   docker:

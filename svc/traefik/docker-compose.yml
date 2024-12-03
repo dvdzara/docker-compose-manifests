@@ -10,29 +10,12 @@ configs:
     file: ./traefik.yml
 
 services:
-  # kics-scan ignore-block
-  chown-volumes:
-    entrypoint:
-      - sh
-      - -c
-      - chown -R 51664:51664 /var/lib/volumes/certificates
-    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
-    network_mode: none
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - certificates:/var/lib/volumes/certificates
-
   traefik:
     cap_drop:
       - ALL
     configs:
       - source: traefik
         target: /etc/traefik/traefik.yml
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     env_file: .env
     group_add:
       - "993"

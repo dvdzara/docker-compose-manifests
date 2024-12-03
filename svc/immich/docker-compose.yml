@@ -11,28 +11,9 @@ networks:
     external: true
 
 services:
-  # kics-scan ignore-block
-  chown-volumes:
-    entrypoint:
-      - sh
-      - -c
-      - chown -R 5551:5551 /var/lib/volumes/data && chown -R 8723:8723 /var/lib/volumes/machine-learning-cache && chown -R 70:70 /var/lib/volumes/postgres
-    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
-    network_mode: none
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - data:/var/lib/volumes/data
-      - machine-learning-cache:/var/lib/volumes/machine-learning-cache
-      - postgres:/var/lib/volumes/postgres
-
   immich-machine-learning:
     cap_drop:
       - ALL
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     image: ghcr.io/immich-app/immich-machine-learning:v1.121.0@sha256:1b8494bb9fe2194f2dc72c4d6b0104e16718f50e8772d54ade57909770816ad1
     read_only: true
     restart: always
@@ -49,8 +30,6 @@ services:
     cap_drop:
       - ALL
     depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:
@@ -80,9 +59,6 @@ services:
   postgres:
     cap_drop:
       - ALL
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     env_file: .env
     environment:
       PGUSER: ${POSTGRES_USER}
@@ -123,11 +99,12 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
-    tmpfs:
-      - /data:uid=9243,gid=9243
     user: 9243:9243
+    volumes:
+      - redis:/data
 
 volumes:
   data: {}
   machine-learning-cache: {}
   postgres: {}
+  redis: {}

@@ -50,28 +50,10 @@ services:
     volumes:
       - nextcloud:/var/www/html:ro
 
-  # kics-scan ignore-block
-  chown-volumes:
-    entrypoint:
-      - sh
-      - -c
-      - chown -R 82:82 /var/lib/volumes/data && chown -R 24056:24056 /var/lib/volumes/redis && chown -R 70:70 /var/lib/volumes/postgres
-    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
-    network_mode: none
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - data:/var/lib/volumes/data
-      - redis:/var/lib/volumes/redis
-      - postgres:/var/lib/volumes/postgres
-
   nextcloud:
     cap_drop:
       - ALL
     depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:
@@ -124,9 +106,6 @@ services:
   postgres:
     cap_drop:
       - ALL
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     env_file: .env
     environment:
       PGUSER: ${POSTGRES_USER}
@@ -154,9 +133,6 @@ services:
   redis:
     cap_drop:
       - ALL
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     healthcheck:
       interval: 10s
       retries: 5

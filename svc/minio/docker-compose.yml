@@ -15,28 +15,11 @@ networks:
     external: true
 
 services:
-  # kics-scan ignore-block
-  chown-volumes:
-    entrypoint:
-      - sh
-      - -c
-      - chown -R 29349:29349 /var/lib/volumes/minio
-    image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
-    network_mode: none
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - /mnt/minio:/var/lib/volumes/minio:z
-
   minio:
     cap_drop:
       - ALL
     command:
       - server
-    depends_on:
-      chown-volumes:
-        condition: service_completed_successfully
     env_file: .env
     environment:
       - MINIO_VOLUMES=/mnt/disk1 /mnt/disk2 /mnt/disk3 /mnt/disk4

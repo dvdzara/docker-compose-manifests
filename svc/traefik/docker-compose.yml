@@ -32,7 +32,6 @@ services:
       default:
         aliases:
           - traefik
-    # kics-scan ignore-block
     ports:
       - 443:1443/tcp
       - 443:1443/udp
@@ -43,7 +42,6 @@ services:
     user: 51664:51664
     volumes:
       - certificates:/var/lib/traefik/certificates
-      # kics-scan ignore-line
       - /var/run/docker.sock:/var/run/docker.sock:z
 
 volumes:

@@ -1,0 +1,43 @@
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: /var/lib/traefik/certificates/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - 1.1.1.1:53
+          - 1.0.0.1:53
+entryPoints:
+  https:
+    address: :1443
+    asDefault: true
+    http:
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: zarantonello.dev
+            sans:
+              - "*.zarantonello.dev"
+          - main: zarantonello.net
+            sans:
+              - "*.zarantonello.net"
+    http3:
+      advertisedPort: 443
+  traefik:
+    address: :3000
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: true
+log:
+  level: INFO
+  format: json
+metrics:
+  prometheus:
+    headerLabels:
+      useragent: User-Agent
+      cfcountry: CF-IPCountry
+ping: {}
+providers:
+  docker:
+    exposedByDefault: false
+    network: traefik_default

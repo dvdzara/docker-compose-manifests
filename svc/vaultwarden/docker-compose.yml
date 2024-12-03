@@ -9,7 +9,7 @@
 # - SMTP_USERNAME
 
 networks:
-  caddy_default:
+  traefik_default:
     external: true
 
 services:
@@ -18,15 +18,14 @@ services:
     entrypoint:
       - sh
       - -c
-      - chown -R 53382:53382 /volumes/data
+      - chown -R 53382:53382 /var/lib/volumes/data
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    network_mode: none
     read_only: true
-    restart: "no"
     security_opt:
       - no-new-privileges:true
-    user: 0:0
     volumes:
-      - data:/volumes/data
+      - data:/var/lib/volumes/data
 
   vaultwarden:
     cap_drop:
@@ -58,10 +57,12 @@ services:
         - /healthcheck.sh
       timeout: 5s
     image: quay.io/vaultwarden/server:1.32.5-alpine@sha256:76d46d32ba4120b022e0a69487f9fd79fc52e2765b1650c5c51a5dd912a3c288
+    labels:
+      traefik.enable: true
+      traefik.http.routers.vaultwarden.rule: Host(`vault.zarantonello.net`)
+      traefik.http.services.vaultwarden.loadbalancer.server.port: 3000
     networks:
-      caddy_default:
-        aliases:
-          - vaultwarden
+      - traefik_default
     read_only: true
     restart: always
     security_opt:

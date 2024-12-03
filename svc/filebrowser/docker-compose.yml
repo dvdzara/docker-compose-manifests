@@ -1,7 +1,5 @@
-# kics-scan disable=698ed579-b239-4f8f-a388-baa4bcb13ef8
-
 networks:
-  caddy_default:
+  traefik_default:
     external: true
 
 services:
@@ -10,31 +8,40 @@ services:
     entrypoint:
       - sh
       - -c
-      - chown -R 50788:50788 /volumes/data /volumes/database
+      - chown -R 50788:50788 /var/lib/volumes/data /var/lib/volumes/database
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    network_mode: none
     read_only: true
-    restart: "no"
     security_opt:
       - no-new-privileges:true
-    user: 0:0
     volumes:
-      - data:/volumes/data
-      - database:/volumes/database
+      - data:/var/lib/volumes/data
+      - database:/var/lib/volumes/database
 
   filebrowser:
     cap_drop:
       - ALL
-    command:
-      - --database=/database/db
-      - --port=3000
     depends_on:
       chown-volumes:
         condition: service_completed_successfully
+    environment:
+      FB_BASE_URL: https://files.zarantonello.dev
+      FB_DATABASE: /var/lib/filebrowser/database/db.sqlite
+      FB_PORT: 3000
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test:
+        - CMD
+        - /healthcheck.sh
+      timeout: 5s
     image: docker.io/filebrowser/filebrowser:v2.31.2@sha256:a4da9ca8364b0a1fc5dd36f7add92582bf673c0ae0bda8dd9bd13062c41d1715
+    labels:
+      traefik.enable: true
+      traefik.http.routers.filebrowser.rule: Host(`files.zarantonello.dev`)
+      traefik.http.services.filebrowser.loadbalancer.server.port: 3000
     networks:
-      caddy_default:
-        aliases:
-          - filebrowser
+      - traefik_default
     read_only: true
     restart: always
     security_opt:
@@ -42,7 +49,7 @@ services:
     user: 50788:50788
     volumes:
       - data:/srv
-      - database:/database
+      - database:/var/lib/filebrowser/database
 
 volumes:
   data: {}

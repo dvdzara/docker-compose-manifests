@@ -10,9 +10,6 @@ configs:
   caddyfile:
     file: configs/${HOSTNAME}.Caddyfile
 
-networks:
-  default: {}
-
 services:
   caddy:
     build: .
@@ -28,8 +25,6 @@ services:
       chown-volumes:
         condition: service_completed_successfully
     env_file: .env
-    networks:
-      - default
     # kics-scan ignore-block
     ports:
       - 443:443/tcp
@@ -51,6 +46,7 @@ services:
       - -c
       - chown -R 41380:41380 /volumes/data
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    network_mode: none
     read_only: true
     restart: "no"
     security_opt:

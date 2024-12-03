@@ -11,7 +11,7 @@
 # option to make the system boot even if one the data drives fails.
 
 networks:
-  caddy_default:
+  traefik_default:
     external: true
 
 services:
@@ -20,15 +20,14 @@ services:
     entrypoint:
       - sh
       - -c
-      - chown -R 29349:29349 /volumes/minio
+      - chown -R 29349:29349 /var/lib/volumes/minio
     image: docker.io/library/busybox:1.37.0-musl@sha256:e95352f7c5174c96ffc684150c9d08fc3ba26ac2f37c613c398fd369e15a0789
+    network_mode: none
     read_only: true
-    restart: "no"
     security_opt:
       - no-new-privileges:true
-    user: 0:0
     volumes:
-      - /mnt/minio:/volumes/minio:z
+      - /mnt/minio:/var/lib/volumes/minio:z
 
   minio:
     cap_drop:
@@ -45,10 +44,16 @@ services:
       - MINIO_CONSOLE_ADDRESS=:9001
       - MINIO_BROWSER_REDIRECT_URL=https://minio.zarantonello.dev/minio/
     image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z-cpuv1@sha256:8d01c1f03e13a216995d9a064f7310a28a978a3d34dd0ed4799247842fcbdc8c
+    labels:
+      traefik.enable: true
+      traefik.http.routers.minio.rule: Host(`minio.zarantonello.dev`)
+      traefik.http.routers.minio.service: minio
+      traefik.http.services.minio.loadbalancer.server.port: 9000
+      traefik.http.routers.minio-dashboard.rule: Host(`minio.zarantonello.dev`) && PathPrefix('/minio')
+      traefik.http.routers.minio-dashboard.service: minio-dashboard
+      traefik.http.services.minio-dashboard.loadbalancer.server.port: 9001
     networks:
-      caddy_default:
-        aliases:
-          - minio
+      - traefik_default
     read_only: true
     restart: always
     security_opt:

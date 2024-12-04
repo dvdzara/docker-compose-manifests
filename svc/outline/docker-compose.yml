@@ -29,13 +29,12 @@ services:
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DATABASE}
       FILE_STORAGE: local
-      OIDC_AUTH_URI: https://gitlab.com/oauth/authorize
+      OIDC_AUTH_URI: https://auth.zarantonello.dev/api/oidc/authorization
       OIDC_DISABLE_REDIRECT: true
-      OIDC_DISPLAY_NAME: GitLab
-      OIDC_SCOPES: openid email
-      OIDC_TOKEN_URI: https://gitlab.com/oauth/token
-      OIDC_USERINFO_URI: https://gitlab.com/oauth/userinfo
-      OIDC_USERNAME_CLAIM: username
+      OIDC_DISPLAY_NAME: Authelia
+      OIDC_TOKEN_URI: https://auth.zarantonello.dev/api/oidc/token
+      OIDC_USERINFO_URI: https://auth.zarantonello.dev/api/oidc/userinfo
+      OIDC_USERNAME_CLAIM: preferred_username
       PGSSLMODE: disable
       RATE_LIMITER_ENABLED: true
       REDIS_URL: redis://redis:6379

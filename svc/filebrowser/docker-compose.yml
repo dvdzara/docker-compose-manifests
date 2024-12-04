@@ -1,3 +1,9 @@
+# SETUP:
+#
+# To use authelia's authentication, you must run the command:
+#
+# /filebrowser config set --auth.method=proxy --auth.header=Remote-User
+
 networks:
   traefik_default:
     external: true
@@ -20,6 +26,7 @@ services:
     image: docker.io/filebrowser/filebrowser:v2.31.2@sha256:a4da9ca8364b0a1fc5dd36f7add92582bf673c0ae0bda8dd9bd13062c41d1715
     labels:
       traefik.enable: true
+      traefik.http.routers.filebrowser.middlewares: authelia@docker
       traefik.http.routers.filebrowser.rule: Host(`files.zarantonello.dev`)
       traefik.http.services.filebrowser.loadbalancer.server.port: 3000
     networks:

@@ -1,4 +1,5 @@
-# yamllint disable rule:quoted-string
+# yamllint disable rule:quoted-strings
+
 access_control:
   rules:
     - domain:
@@ -33,8 +34,8 @@ identity_providers:
           - openid
           - email
           - profile
-        userinfo_signed_response_alg: none
         token_endpoint_auth_method: client_secret_post
+        userinfo_signed_response_alg: none
     hmac_secret: '{{ mustEnv "OIDC_HMAC_SECRET" | trim }}'
     jwks:
       - key: |

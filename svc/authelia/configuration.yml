@@ -1,3 +1,4 @@
+# yamllint disable rule:quoted-string
 access_control:
   rules:
     - domain:
@@ -9,36 +10,6 @@ authentication_backend:
     path: /config/users.yml
   password_reset:
     disable: true
-log:
-  format: json
-  level: info
-password_policy:
-  zxcvbn:
-    enabled: true
-    min_score: 4
-session:
-  cookies:
-    - authelia_url: https://auth.zarantonello.dev
-      domain: zarantonello.dev
-    - authelia_url: https://auth.zarantonello.net
-      domain: zarantonello.net
-  redis:
-    host: redis
-    port: 6379
-  secret: '{{ mustEnv "SESSION_SECRET" | trim }}'
-storage:
-  encryption_key: '{{ mustEnv "STORAGE_ENCRYPTION_KEY" }}'
-  postgres:
-    address: tcp://postgres:5432
-    database: '{{ mustEnv "POSTGRES_DB" | trim }}'
-    password: '{{ mustEnv "POSTGRES_PASSWORD" | trim }}'
-    username: '{{ mustEnv "POSTGRES_USER" | trim }}'
-notifier:
-  smtp:
-    address: submissions://smtp.purelymail.com:465
-    password: '{{ mustEnv "SMTP_PASSWORD" | trim }}'
-    sender: Authelia <auth@zarantonello.dev>
-    username: '{{ mustEnv "SMTP_USER" | trim }}'
 identity_providers:
   oidc:
     clients:
@@ -68,6 +39,36 @@ identity_providers:
     jwks:
       - key: |
           {{ mustEnv "OIDC_JWKS_PRIVATE_KEY_BASE64" | trim | b64dec | indent 10 | trim }}
+log:
+  format: json
+  level: info
+notifier:
+  smtp:
+    address: submissions://smtp.purelymail.com:465
+    password: '{{ mustEnv "SMTP_PASSWORD" | trim }}'
+    sender: Authelia <auth@zarantonello.dev>
+    username: '{{ mustEnv "SMTP_USER" | trim }}'
+password_policy:
+  zxcvbn:
+    enabled: true
+    min_score: 4
+session:
+  cookies:
+    - authelia_url: https://auth.zarantonello.dev
+      domain: zarantonello.dev
+    - authelia_url: https://auth.zarantonello.net
+      domain: zarantonello.net
+  redis:
+    host: redis
+    port: 6379
+  secret: '{{ mustEnv "SESSION_SECRET" | trim }}'
+storage:
+  encryption_key: '{{ mustEnv "STORAGE_ENCRYPTION_KEY" }}'
+  postgres:
+    address: tcp://postgres:5432
+    database: '{{ mustEnv "POSTGRES_DB" | trim }}'
+    password: '{{ mustEnv "POSTGRES_PASSWORD" | trim }}'
+    username: '{{ mustEnv "POSTGRES_USER" | trim }}'
 telemetry:
   metrics:
     enabled: true

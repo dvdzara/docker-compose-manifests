@@ -8,7 +8,7 @@ access_control:
       policy: two_factor
 authentication_backend:
   file:
-    path: /config/users.yml
+    path: /run/secrets/authelia-users
   password_reset:
     disable: true
 identity_providers:

@@ -21,12 +21,16 @@
 configs:
   authelia:
     file: ./configuration.yml
-  authelia-users:
-    file: ./users.yml
 
 networks:
   traefik_default:
     external: true
+  vmagent_default:
+    external: true
+
+secrets:
+  authelia-users:
+    file: ./users.yml
 
 services:
   authelia:
@@ -35,8 +39,6 @@ services:
     configs:
       - source: authelia
         target: /config/configuration.yml
-      - source: authelia-users
-        target: /config/users.yml
     depends_on:
       postgres:
         condition: service_healthy
@@ -60,12 +62,17 @@ services:
       traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader: true
       traefik.http.routers.authelia.rule: Host(`auth.zarantonello.dev`) || Host(`auth.zarantonello.net`)
       traefik.http.services.authelia.loadbalancer.server.port: 9091
+      victoriametrics.job: authelia
+      victoriametrics.port: 9959
     networks:
       default: {}
       traefik_default:
         aliases:
           - authelia
+      vmagent_default: {}
     restart: always
+    secrets:
+      - authelia-users
     security_opt:
       - no-new-privileges:true
     user: 2154:2154
@@ -118,6 +125,5 @@ services:
       - redis:/data
 
 volumes:
-  data: {}
   postgres: {}
   redis: {}

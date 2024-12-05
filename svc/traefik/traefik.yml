@@ -23,8 +23,6 @@ entryPoints:
               - "*.zarantonello.net"
     http3:
       advertisedPort: 443
-  traefik:
-    address: :3000
 global:
   checkNewVersion: false
   sendAnonymousUsage: true

@@ -1,0 +1,32 @@
+networks:
+  traefik_default:
+    external: true
+  vmagent_default:
+    external: true
+
+services:
+  victoriametrics:
+    cap_drop:
+      - ALL
+    command:
+      - -retentionPeriod=90d
+    image: docker.io/victoriametrics/victoria-metrics:v1.107.0-scratch@sha256:0afdce4313a732d932fe609a877248ee86cb840ff4fb953683f5b0171d836e00
+    labels:
+      traefik.enable: true
+      traefik.http.routers.victoriametrics.rule: Host(`metrics.zarantonello.net`)
+      traefik.http.services.victoriametrics.loadbalancer.server.port: 8428
+      victoriametrics.job: victoriametrics
+      victoriametrics.port: 8428
+    networks:
+      - traefik_default
+      - vmagent_default
+    read_only: true
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: 34866:34866
+    volumes:
+      - data:/victoria-metrics-data
+
+volumes:
+  data: {}

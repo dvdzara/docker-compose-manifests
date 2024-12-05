@@ -1,0 +1,7 @@
+apiVersion: 1
+
+datasources:
+  - name: VictoriaMetrics
+    type: prometheus
+    url: https://metrics.zarantonello.net
+    isDefault: true

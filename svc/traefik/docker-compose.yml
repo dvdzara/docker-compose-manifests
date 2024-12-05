@@ -9,6 +9,12 @@ configs:
   traefik:
     file: ./traefik.yml
 
+networks:
+  traefik_default:
+    name: traefik_default
+  vmagent_default:
+    external: true
+
 services:
   traefik:
     cap_drop:
@@ -28,10 +34,14 @@ services:
         - healthcheck
       timeout: 5s
     image: docker.io/library/traefik:v3.2.1@sha256:1a3e33f976d10f45efd613aa64814867068bf51c782599a70ef370447686291b
+    labels:
+      victoriametrics.job: traefik
+      victoriametrics.port: 8080
     networks:
-      default:
+      traefik_default:
         aliases:
           - traefik
+      vmagent_default: {}
     ports:
       - 443:1443/tcp
       - 443:1443/udp

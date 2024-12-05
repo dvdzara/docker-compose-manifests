@@ -28,6 +28,10 @@ networks:
   vmagent_default:
     external: true
 
+secrets:
+  authelia-users:
+    file: ./users.yml
+
 services:
   authelia:
     cap_drop:
@@ -119,10 +123,6 @@ services:
     user: 46406:46406
     volumes:
       - redis:/data
-
-secrets:
-  authelia-users:
-    file: ./users.yml
 
 volumes:
   postgres: {}

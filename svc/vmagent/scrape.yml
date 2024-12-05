@@ -1,7 +1,9 @@
+# yamllint disable rule:quoted-strings
+
 scrape_configs:
-  - job_name: docker
-    docker_sd_configs:
+  - docker_sd_configs:
       - host: unix:///var/run/docker.sock
+    job_name: docker
     relabel_configs:
       - action: drop
         if: '{__meta_docker_container_label_victoriametrics_job=""}'
@@ -12,11 +14,13 @@ scrape_configs:
       - action: labelmap
         regex: __meta_docker_container_label_victoriametrics_job
         replacement: job
-      - source_labels: [__address__, __meta_docker_container_label_victoriametrics_port]
-        action: replace
-        target_label: __address__
+      - action: replace
         regex: ([^:]+):\d+;(\d+)
         replacement: $1:$2
+        source_labels:
+          - __address__
+          - __meta_docker_container_label_victoriametrics_port
+        target_label: __address__
   - job_name: docker-daemon
     static_configs:
       - targets:

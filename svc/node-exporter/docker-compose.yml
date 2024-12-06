@@ -5,10 +5,10 @@ services:
     command:
       - --path.rootfs=/host
     image: quay.io/prometheus/node-exporter:v1.8.2
-    network_mode: host
     labels:
       victoriametrics.job: node-exporter
       victoriametrics.port: 9100
+    network_mode: host
     pid: host
     read_only: true
     restart: always

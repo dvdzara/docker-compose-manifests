@@ -8,20 +8,31 @@ scrape_configs:
       - action: drop
         if: '{__meta_docker_container_label_victoriametrics_job=""}'
       - action: keep
-        if: '{__meta_docker_network_name="vmagent_default"}'
+        if: '{__meta_docker_network_name=~"vmagent_default|host"}'
       - action: keep
         if: '{__meta_docker_port_public_ip=~"\\d+\\.\\d+\\.\\d+\\.\\d+|"}'
       - action: labelmap
         regex: __meta_docker_container_label_victoriametrics_job
         replacement: job
       - action: replace
+        if: '{__meta_docker_network_name="vmagent_default"}'
         regex: ([^:]+):\d+;(\d+)
         replacement: $1:$2
         source_labels:
           - __address__
           - __meta_docker_container_label_victoriametrics_port
         target_label: __address__
+      - action: replace
+        if: '{__meta_docker_network_name="host"}'
+        regex: (\d+)
+        replacement: hosts.docker.internal:$1
+        source_labels:
+          - __meta_docker_container_label_victoriametrics_port
+        target_label: __address__
   - job_name: docker-daemon
+    relabel_configs:
+      - action: drop
+        if: '{__name__=~"swarm_.*|etcd_.*"}'
     static_configs:
       - targets:
           - hosts.docker.internal:9323

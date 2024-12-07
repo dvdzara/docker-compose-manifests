@@ -25,6 +25,15 @@ identity_providers:
           - openid
           - email
           - profile
+      - client_id: '{{ mustEnv "MINIO_CLIENT_ID" | trim }}'
+        client_name: Minio
+        client_secret: '{{ mustEnv "MINIO_CLIENT_SECRET" | trim }}'
+        redirect_uris:
+          - https://minio.zarantonello.dev/oauth_callback
+        scopes:
+          - openid
+          - email
+          - profile
       - client_id: '{{ mustEnv "OUTLINE_CLIENT_ID" | trim }}'
         client_name: Outline
         client_secret: '{{ mustEnv "OUTLINE_CLIENT_SECRET" | trim }}'
@@ -35,7 +44,6 @@ identity_providers:
           - email
           - profile
         token_endpoint_auth_method: client_secret_post
-        userinfo_signed_response_alg: none
     hmac_secret: '{{ mustEnv "OIDC_HMAC_SECRET" | trim }}'
     jwks:
       - key: |

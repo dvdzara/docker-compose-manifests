@@ -47,6 +47,10 @@ services:
     networks:
       - default
       - traefik_default
+    ports:
+      # Used for connecting with the app, so that we can skip the double
+      # encryption with https over tailscale.
+      - 100.106.32.89:2283:2283
     restart: always
     security_opt:
       - no-new-privileges:true

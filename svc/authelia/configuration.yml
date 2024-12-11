@@ -34,6 +34,7 @@ identity_providers:
           - openid
           - email
           - profile
+          - groups
       - client_id: '{{ mustEnv "OUTLINE_CLIENT_ID" | trim }}'
         client_name: Outline
         client_secret: '{{ mustEnv "OUTLINE_CLIENT_SECRET" | trim }}'

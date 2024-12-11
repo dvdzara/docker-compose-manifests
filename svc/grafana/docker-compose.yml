@@ -33,7 +33,6 @@ services:
     image: docker.io/grafana/grafana:11.4.0@sha256:d8ea37798ccc41061a62ab080f2676dda6bf7815558499f901bdb0f533a456fb
     labels:
       traefik.enable: true
-      traefik.http.routers.grafana.middlewares: authelia@docker
       traefik.http.routers.grafana.rule: Host(`grafana.zarantonello.net`)
       traefik.http.services.grafana.loadbalancer.server.port: 3000
       victoriametrics.job: grafana

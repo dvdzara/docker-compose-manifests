@@ -45,6 +45,15 @@ identity_providers:
           - email
           - profile
         token_endpoint_auth_method: client_secret_post
+      - client_id: '{{ mustEnv "GRAFANA_CLIENT_ID" | trim }}'
+        client_name: Grafana
+        client_secret: '{{ mustEnv "GRAFANA_CLIENT_SECRET" | trim }}'
+        redirect_uris:
+          - https://grafana.zarantonello.net/login/generic_oauth
+        scopes:
+          - openid
+          - email
+          - profile
     hmac_secret: '{{ mustEnv "OIDC_HMAC_SECRET" | trim }}'
     jwks:
       - key: |

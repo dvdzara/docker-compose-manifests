@@ -10,7 +10,7 @@ services:
       - ALL
     command:
       - -retentionPeriod=90d
-    image: docker.io/victoriametrics/victoria-metrics:v1.107.0-scratch@sha256:0afdce4313a732d932fe609a877248ee86cb840ff4fb953683f5b0171d836e00
+    image: docker.io/victoriametrics/victoria-metrics:v1.108.0-scratch@sha256:446b3aaf60177f0a81704fd9d3f07ba9994dfd4087bdb038835aeeccc54d992a
     labels:
       traefik.enable: true
       traefik.http.routers.victoriametrics.rule: Host(`metrics.zarantonello.net`)

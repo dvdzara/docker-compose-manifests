@@ -17,10 +17,5 @@
       "groupSlug": "immich",
       "groupName": "immich"
     },
-    {
-      "matchPackageNames": ["ghcr.io/mbecker20/*"],
-      "groupSlug": "komodo",
-      "groupName": "komodo"
-    }
   ]
 }

@@ -5,7 +5,6 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "DavidAnson.vscode-markdownlint",
         "esbenp.prettier-vscode",
         "redhat.vscode-yaml"
       ]

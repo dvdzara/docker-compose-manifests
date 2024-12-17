@@ -94,5 +94,3 @@ telemetry:
 theme: auto
 totp:
   issuer: auth.zarantonello.dev
-webauthn:
-  disable: true

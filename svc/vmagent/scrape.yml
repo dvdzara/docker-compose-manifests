@@ -1,19 +1,31 @@
 # yamllint disable rule:quoted-strings
 
 scrape_configs:
+  # Scrape docker containers.
   - docker_sd_configs:
       - host: unix:///var/run/docker.sock
+        # We can't use any random network, it is necessary to use the
+        # configuration below to filter targets and keep them only if they are
+        # part of the vmagent_default or host network.
+        match_first_network: false
     job_name: docker
     relabel_configs:
+      # Containers have to set a job name to be scraped.
       - action: drop
         if: '{__meta_docker_container_label_victoriametrics_job=""}'
+      # Keep only containers connecting through the vmagent_default or the host
+      # network.
       - action: keep
         if: '{__meta_docker_network_name=~"vmagent_default|host"}'
+      # Keep only the the scrape target that uses with the ipv4 port. The ipv6
+      # one would be a duplicate.
       - action: keep
         if: '{__meta_docker_port_public_ip=~"\\d+\\.\\d+\\.\\d+\\.\\d+|"}'
+      # Replace the job label.
       - action: labelmap
         regex: __meta_docker_container_label_victoriametrics_job
         replacement: job
+      # Set the port specified by the user.
       - action: replace
         if: '{__meta_docker_network_name="vmagent_default"}'
         regex: ([^:]+):\d+;(\d+)
@@ -29,9 +41,11 @@ scrape_configs:
         source_labels:
           - __meta_docker_container_label_victoriametrics_port
         target_label: __address__
+  # Scrape the docker daemon.
   - job_name: docker-daemon
     relabel_configs:
       - action: drop
+        # These labels are set only when using docker swarm.
         if: '{__name__=~"swarm_.*|etcd_.*"}'
     static_configs:
       - targets:

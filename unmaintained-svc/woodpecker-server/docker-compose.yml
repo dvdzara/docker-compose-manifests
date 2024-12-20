@@ -45,7 +45,7 @@ services:
         - woodpecker-server
         - ping
       timeout: 5s
-    image: docker.io/woodpeckerci/woodpecker-server:v2.8.1@sha256:83ce81e5f039379d212a77804dbd2d7db0b5c3c3516e3ae311a4748982e58eee
+    image: docker.io/woodpeckerci/woodpecker-server:v2.8.2@sha256:66f424f2abf19ae84868fc486569e0fcbb32fb969e4ff6481b31eeeb35d40f3f
     networks:
       cloudflared_default:
         aliases:

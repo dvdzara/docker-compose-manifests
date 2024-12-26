@@ -18,8 +18,8 @@ blocking:
   loading:
     concurrency: 2
     downloads:
-      timeout: 60s
       cooldown: 10s
+      timeout: 60s
     refreshPeriod: 72h
 bootstrapDns:
   - tcp+udp:1.1.1.1

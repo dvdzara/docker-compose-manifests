@@ -28,10 +28,10 @@ caching:
 customDNS:
   mapping:
     files.zarantonello.dev: 100.106.32.89
-    grafana.zarantonello.dev: 100.106.32.89
+    grafana.zarantonello.net: 100.106.32.89
     hp2420.srv.zarantonello.dev: 100.81.212.20
     igl.zarantonello.dev: 100.106.32.89
-    metrics.zarantonello.dev: 100.106.32.89
+    metrics.zarantonello.net: 100.106.32.89
     minio.zarantonello.dev: 100.81.212.20
     photos.zarantonello.net: 100.106.32.89
     vault.zarantonello.net: 100.106.32.89

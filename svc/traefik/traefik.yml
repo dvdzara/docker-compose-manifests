@@ -3,13 +3,10 @@ certificatesResolvers:
     acme:
       dnsChallenge:
         provider: cloudflare
-        resolvers:
-          - 1.1.1.1:53
-          - 1.0.0.1:53
       storage: /var/lib/traefik/certificates/acme.json
 entryPoints:
   https:
-    address: :1443
+    address: :8443
     asDefault: true
     http:
       tls:

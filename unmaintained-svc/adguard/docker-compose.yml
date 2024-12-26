@@ -20,8 +20,8 @@ services:
     networks:
       - traefik_default
     ports:
-      - 100.106.32.89:53:1053/tcp
-      - 100.106.32.89:53:1053/udp
+      - 53:1053/tcp
+      - 53:1053/udp
     read_only: true
     restart: always
     security_opt:

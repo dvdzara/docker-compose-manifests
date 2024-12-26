@@ -39,7 +39,7 @@ services:
     networks:
       - traefik_default
     ports:
-      - 100.81.212.20:9000:9000
+      - 9000:9000
     read_only: true
     restart: always
     security_opt:

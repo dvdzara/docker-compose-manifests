@@ -58,7 +58,7 @@ services:
         - CMD
         - /app/healthcheck.sh
       timeout: 5s
-    image: docker.io/authelia/authelia:4.38.17@sha256:bd0b56ab682ecdf994cc66bbbf75e3ab437a3e4aea4c707eeea0c2fca6cf945e
+    image: docker.io/authelia/authelia:4.38.18@sha256:a5e6fa4b1dbdc296f80f9175157b145a0598690ec8cd4d6e105cd4498fe0c731
     labels:
       traefik.enable: true
       traefik.http.middlewares.authelia.forwardAuth.address: http://authelia:9091/api/authz/forward-auth

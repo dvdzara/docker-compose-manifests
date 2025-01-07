@@ -64,6 +64,8 @@ services:
       traefik.http.middlewares.authelia.forwardAuth.address: http://authelia:9091/api/authz/forward-auth
       traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders: Remote-User,Remote-Groups,Remote-Email,Remote-Name
       traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader: true
+      # TLS is terminated by cloudflared.
+      traefik.http.routers.authelia.entrypoints: http
       traefik.http.routers.authelia.rule: Host(`auth.zarantonello.dev`) || Host(`auth.zarantonello.net`)
       traefik.http.services.authelia.loadbalancer.server.port: 9091
       victoriametrics.job: authelia

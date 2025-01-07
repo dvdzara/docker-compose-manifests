@@ -63,7 +63,7 @@ services:
       OVERWRITEPROTOCOL: https
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.4-fpm-alpine@sha256:0ad48d73d853f948f79f363b7aaa7c47d5f593f512c6bc15d368e8695c147f50
+    image: docker.io/library/nextcloud:30.0.4-fpm-alpine@sha256:4f36442c7bca4b76c13be327bf986597b6234e0aefa5cf72d332fb58ee71ae77
     restart: always
     security_opt:
       - no-new-privileges:true

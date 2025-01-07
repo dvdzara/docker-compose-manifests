@@ -70,7 +70,7 @@ services:
       - -c
       - while true ; do wget http://outline:3000/api/cron.daily?token=${UTILS_SECRET} ; sleep 43200 ; done
     env_file: .env
-    image: docker.io/library/alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45
+    image: docker.io/library/alpine:3.21.1@sha256:b97e2a89d0b9e4011bb88c02ddf01c544b8c781acf1f4d559e7c8f12f1047ac3
     networks:
       - default
     restart: always

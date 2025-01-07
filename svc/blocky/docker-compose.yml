@@ -15,7 +15,7 @@ services:
     configs:
       - source: blocky
         target: /app/config.yml
-    image: ghcr.io/0xERR0R/blocky:0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
+    image: ghcr.io/0xerr0r/blocky:0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
     labels:
       victoriametrics.job: blocky
       victoriametrics.port: 8080

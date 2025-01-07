@@ -36,13 +36,14 @@ services:
     image: docker.io/library/traefik:v3.3.0@sha256:d4a929a6efd0b740bb3a1a2aff1dee7d52833690dac6a3151c9cecb1db6e25e2
     labels:
       victoriametrics.job: traefik
-      victoriametrics.port: 8080
+      victoriametrics.port: 8000
     networks:
       traefik_default:
         aliases:
           - traefik
       vmagent_default: {}
     ports:
+      - 80:8080
       - 443:8443/tcp
       - 443:8443/udp
     read_only: true

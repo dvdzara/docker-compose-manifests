@@ -2,7 +2,7 @@ FROM docker.io/library/caddy:2.8.4-builder-alpine@sha256:edc6e5121f18919c8f0acb4
 
 RUN xcaddy build --with github.com/caddy-dns/cloudflare
 
-FROM docker.io/library/caddy:2.8.4-alpine@sha256:fea55ae5ce2e5c07dd3d592cc34862504075d55d505d731cdc2a3f051d70d39c
+FROM docker.io/library/caddy:2.8.4-alpine@sha256:886f7caa715bd1d31c8a0253841a441d93d5fe374b9d9a3e3cf675088d3ab9ce
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 

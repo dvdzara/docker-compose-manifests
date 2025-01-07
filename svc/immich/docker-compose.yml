@@ -42,15 +42,14 @@ services:
     image: ghcr.io/immich-app/immich-server:v1.123.0@sha256:666ce77995230ff7327da5d285c861895576977237de08564e3c3ddf842877eb
     labels:
       traefik.enable: true
+      # The app connects via http, it's less resource intensive and encryption
+      # is provided by tailscale anyway.
+      traefik.http.routers.immich.entrypoints: https,http
       traefik.http.routers.immich.rule: Host(`photos.zarantonello.net`)
       traefik.http.services.immich.loadbalancer.server.port: 2283
     networks:
       - default
       - traefik_default
-    ports:
-      # Used for connecting with the app, so that we can skip the double
-      # encryption with https over tailscale.
-      - 100.106.32.89:2283:2283
     restart: always
     security_opt:
       - no-new-privileges:true

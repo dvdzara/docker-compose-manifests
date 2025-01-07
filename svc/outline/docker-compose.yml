@@ -29,6 +29,8 @@ services:
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DATABASE}
       FILE_STORAGE: local
+      # Creates a redirect loop with cloudflared and traefik and it's not necessary.
+      FORCE_HTTPS: false
       OIDC_AUTH_URI: https://auth.zarantonello.dev/api/oidc/authorization
       OIDC_DISABLE_REDIRECT: true
       OIDC_DISPLAY_NAME: Authelia
@@ -45,6 +47,8 @@ services:
     image: docker.io/outlinewiki/outline:0.81.1@sha256:e539971b59b2523ab54bf792105d1cff6432974a37e18211c175cd053d7feb62
     labels:
       traefik.enable: true
+      # TLS is terminated by cloudflared.
+      traefik.http.routers.outline.entrypoints: http
       traefik.http.routers.outline.rule: Host(`docs.zarantonello.dev`)
       traefik.http.services.outline.loadbalancer.server.port: 3000
     networks:
@@ -59,6 +63,7 @@ services:
     volumes:
       - data:/var/lib/outline/data
 
+  # Recurrent job that runs once a day.
   outline-cron:
     cap_drop:
       - ALL
@@ -68,7 +73,7 @@ services:
     entrypoint:
       - sh
       - -c
-      - while true ; do wget http://outline:3000/api/cron.daily?token=${UTILS_SECRET} ; sleep 43200 ; done
+      - while true ; do wget "https://docs.zarantonello.dev/api/cron.daily?token=${UTILS_SECRET}" ; sleep 43200 ; done
     env_file: .env
     image: docker.io/library/alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45
     networks:

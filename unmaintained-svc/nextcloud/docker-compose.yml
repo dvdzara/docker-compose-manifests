@@ -28,7 +28,7 @@ services:
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
-    image: docker.io/library/caddy:2.8.4-alpine@sha256:886f7caa715bd1d31c8a0253841a441d93d5fe374b9d9a3e3cf675088d3ab9ce
+    image: docker.io/library/caddy:2.8.4-alpine@sha256:af32e97399febea808609119bb21544d0265c58a02836576e32a2d082c262c17
     labels:
       traefik.enable: true
       traefik.http.routers.nextcloud.rule: Host(`cloud.zarantonello.dev`)
@@ -63,7 +63,7 @@ services:
       OVERWRITEPROTOCOL: https
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.4-fpm-alpine@sha256:4f36442c7bca4b76c13be327bf986597b6234e0aefa5cf72d332fb58ee71ae77
+    image: docker.io/library/nextcloud:30.0.4-fpm-alpine@sha256:bdf6f8fac31ac8b5a801f0dc2107cc1f2d2b1a307f23d65323b24e9772cff6fb
     restart: always
     security_opt:
       - no-new-privileges:true

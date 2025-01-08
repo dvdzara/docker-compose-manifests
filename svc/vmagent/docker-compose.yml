@@ -12,7 +12,7 @@ services:
       - ALL
     command:
       - -promscrape.config=/etc/victoriametrics/scrape.yml
-      - -remoteWrite.url=https://metrics.zarantonello.net/api/v1/write
+      - -remoteWrite.url=http://victoriametrics.zarantonello.net/api/v1/write
       - -remoteWrite.label=host=${HOSTNAME}
     configs:
       - source: vmagent-scrape

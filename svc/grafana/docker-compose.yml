@@ -62,7 +62,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.2-alpine@sha256:c06885332d687650faea9901660ab39a6361565b39e5e5c320ef56bd3cfa7733
+    image: docker.io/library/postgres:17.2-alpine@sha256:272a3f9b04d2170ce119c509c7706bc5e4b29e05ed5ccf70462b4f01cb556205
     read_only: true
     restart: always
     security_opt:

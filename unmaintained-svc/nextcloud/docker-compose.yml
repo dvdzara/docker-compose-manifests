@@ -28,7 +28,7 @@ services:
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
-    image: docker.io/library/caddy:2.8.4-alpine@sha256:af32e97399febea808609119bb21544d0265c58a02836576e32a2d082c262c17
+    image: docker.io/library/caddy:2.9.1-alpine@sha256:e70ccf0c9821a88303671ef22d7b5e2d2b6057a8b18703022d755ba4d5fd35cd
     labels:
       traefik.enable: true
       traefik.http.routers.nextcloud.rule: Host(`cloud.zarantonello.dev`)

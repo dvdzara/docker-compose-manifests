@@ -54,6 +54,7 @@ services:
       - ALL
     env_file: .env
     environment:
+      # Configures the user used for healthchecking.
       PGUSER: ${POSTGRES_USER}
     healthcheck:
       interval: 10s

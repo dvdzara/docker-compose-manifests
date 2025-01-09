@@ -75,7 +75,7 @@ services:
       - -c
       - while true ; do wget "https://docs.zarantonello.dev/api/cron.daily?token=${UTILS_SECRET}" ; sleep 43200 ; done
     env_file: .env
-    image: docker.io/library/alpine:3.21.1@sha256:b97e2a89d0b9e4011bb88c02ddf01c544b8c781acf1f4d559e7c8f12f1047ac3
+    image: docker.io/library/alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099
     networks:
       - default
     restart: always
@@ -96,7 +96,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.2-alpine@sha256:ae4c58bfaf6f12b3ef8767d0a5a3cc1e5390a5013f37eb79e4cc5b98142d795d
+    image: docker.io/library/postgres:17.2-alpine@sha256:17143ad87797f511036cf8f50ada164aeb371f0d8068a172510549fb5d2cd65f
     read_only: true
     restart: always
     security_opt:
@@ -121,7 +121,7 @@ services:
         - redis-cli
         - ping
       timeout: 5s
-    image: docker.io/library/redis:7.4.2-alpine@sha256:339f8403efc53c93179052f02a5196c8dd3b58c6a0428b837886ef88246f6c64
+    image: docker.io/library/redis:7.4.2-alpine@sha256:12129f2f3773d5aebc5f549ea14850bc59a6c0c1233d7598c2bc6984a83ded53
     read_only: true
     restart: always
     security_opt:

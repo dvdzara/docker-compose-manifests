@@ -40,3 +40,6 @@ providers:
   docker:
     exposedByDefault: false
     network: traefik_default
+  file:
+    filename: /etc/traefik/middlewares.yml
+    watch: false

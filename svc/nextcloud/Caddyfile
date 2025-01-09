@@ -1,0 +1,42 @@
+# This configuration assumes that caddy is running behind cloudflared.
+
+
+{
+	admin off
+	auto_https off
+	http_port 8080
+	https_port 8443
+}
+
+:3000 {
+	header {
+		Strict-Transport-Security max-age=15552000;
+	}
+
+	@dav {
+		path /.well-known/carddav
+		path /.well-known/caldav
+	}
+	redir @dav /remote.php/dav 301
+
+    @forbidden {
+        path /3rdparty/*
+        path /config/*
+        path /console.php
+        path /data/*
+        path /db_structure
+        path /.htaccess
+        path /lib/*
+        path /occ
+        path /README
+        path /templates/*
+        path /.xml
+    }
+	handle @forbidden {
+		rewrite * index.php/{uri}
+	}
+
+	file_server
+	root * /var/www/html
+	php_fastcgi nextcloud:9000
+}

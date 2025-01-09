@@ -8,6 +8,8 @@
 configs:
   traefik:
     file: ./traefik.yml
+  traefik-middlewares:
+    file: ./middlewares.yml
 
 networks:
   traefik_default:
@@ -22,6 +24,8 @@ services:
     configs:
       - source: traefik
         target: /etc/traefik/traefik.yml
+      - source: traefik-middlewares
+        target: /etc/traefik/middlewares.yml
     env_file: .env
     group_add:
       - "993"

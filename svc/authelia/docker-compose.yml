@@ -121,7 +121,7 @@ services:
         - redis-cli
         - ping
       timeout: 5s
-    image: docker.io/library/redis:7.4.2-alpine@sha256:339f8403efc53c93179052f02a5196c8dd3b58c6a0428b837886ef88246f6c64
+    image: docker.io/library/redis:7.4.2-alpine@sha256:12129f2f3773d5aebc5f549ea14850bc59a6c0c1233d7598c2bc6984a83ded53
     read_only: true
     restart: always
     security_opt:

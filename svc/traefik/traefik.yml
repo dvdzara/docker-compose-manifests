@@ -37,6 +37,9 @@ metrics:
       useragent: User-Agent
 ping: {}
 providers:
+  file:
+    filename: /etc/traefik/middlewares.yml
+    watch: false
   docker:
     exposedByDefault: false
     network: traefik_default

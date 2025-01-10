@@ -6,6 +6,9 @@
 	auto_https off
 	http_port 8080
 	https_port 8443
+	servers {
+		trusted_proxies static 172.16.0.0/12
+	}
 }
 
 :3000 {

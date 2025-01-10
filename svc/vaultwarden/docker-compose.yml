@@ -42,6 +42,7 @@ services:
     image: quay.io/vaultwarden/server:1.32.7-alpine@sha256:f2da5d437e0c25f0a6f3a5283db74ed06dfcf4136f8db7cb17277506b1d30a5c
     labels:
       traefik.enable: true
+      traefik.http.routers.vaultwarden.entrypoints: https
       traefik.http.routers.vaultwarden.rule: Host(`vault.zarantonello.net`)
       traefik.http.services.vaultwarden.loadbalancer.server.port: 3000
     networks:

@@ -33,6 +33,7 @@ services:
     image: quay.io/minio/minio:RELEASE.2024-12-18T13-15-44Z-cpuv1@sha256:536d08001a739688f1ec9aad169fdd0d59702d1ef91dce529ed1faa56c9f53f5
     labels:
       traefik.enable: true
+      traefik.http.routers.minio-dashboard.entrypoints: https
       traefik.http.routers.minio-dashboard.rule: Host(`minio.zarantonello.dev`)
       traefik.http.routers.minio-dashboard.service: minio-dashboard
       traefik.http.services.minio-dashboard.loadbalancer.server.port: 9001

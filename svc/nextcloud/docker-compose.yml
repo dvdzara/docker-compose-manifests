@@ -31,7 +31,7 @@ services:
     image: docker.io/library/caddy:2.9.1-alpine@sha256:eed289e78b2a0fa7d856b5d5aa9f0b39f727ab49c92f27986f1c03291c42f119
     labels:
       traefik.enable: true
-      traefik.http.routers.nextcloud.entrypoints: http,https
+      traefik.http.routers.nextcloud.entrypoints: cloudflared
       traefik.http.routers.nextcloud.rule: Host(`cloud.zarantonello.dev`)
       traefik.http.services.nextcloud.loadbalancer.server.port: 3000
     networks:
@@ -60,8 +60,6 @@ services:
     environment:
       NEXTCLOUD_TRUSTED_DOMAINS: cloud.zarantonello.dev
       OVERWRITECLIURL: http://caddy:3000
-      OVERWRITEHOST: cloud.zarantonello.dev
-      OVERWRITEPROTOCOL: https
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
     image: docker.io/library/nextcloud:30.0.4-fpm-alpine@sha256:d9932569e3366ae026b2881b44657fb15476da7c45e04cffb855ae9d277f29c0
@@ -87,7 +85,6 @@ services:
       - while true ; do php -f /var/www/html/cron.php ; sleep 300 ; done
     extends:
       service: nextcloud
-    user: 33:33
 
   # The first time nextcloud runs, it's normal that this service fails. Ensure
   # to install the notify push app inside nextcloud to make this work.
@@ -103,7 +100,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.middlewares.nextcloudNotifyPushStripPrefix.stripPrefix.prefixes: /push
-      traefik.http.routers.nextcloud-notify-push.entrypoints: http,https
+      traefik.http.routers.nextcloud-notify-push.entrypoints: http
       traefik.http.routers.nextcloud-notify-push.middlewares: nextcloudNotifyPushStripPrefix@docker
       traefik.http.routers.nextcloud-notify-push.rule: Host(`cloud.zarantonello.dev`) && PathPrefix(`/push`)
       traefik.http.services.nextcloud-notify-push.loadbalancer.server.port: 7867

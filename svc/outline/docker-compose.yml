@@ -45,8 +45,7 @@ services:
     image: docker.io/outlinewiki/outline:0.81.1@sha256:e539971b59b2523ab54bf792105d1cff6432974a37e18211c175cd053d7feb62
     labels:
       traefik.enable: true
-      traefik.http.routers.outline.entrypoints: http
-      traefik.http.routers.outline.middlewares: cloudflaredHeaders@file
+      traefik.http.routers.outline.entrypoints: cloudflared
       traefik.http.routers.outline.rule: Host(`docs.zarantonello.dev`)
       traefik.http.services.outline.loadbalancer.server.port: 3000
     networks:

@@ -61,18 +61,15 @@ services:
     image: docker.io/authelia/authelia:4.38.18@sha256:a5e6fa4b1dbdc296f80f9175157b145a0598690ec8cd4d6e105cd4498fe0c731
     labels:
       traefik.enable: true
-      traefik.http.routers.authelia.entrypoints: http
-      traefik.http.routers.authelia.middlewares: cloudflaredHeaders@file
+      traefik.http.routers.authelia.entrypoints: cloudflared
       traefik.http.routers.authelia.rule: Host(`auth.zarantonello.dev`) || Host(`auth.zarantonello.net`)
       traefik.http.services.authelia.loadbalancer.server.port: 9091
       victoriametrics.job: authelia
       victoriametrics.port: 9959
     networks:
-      default: {}
-      traefik_default:
-        aliases:
-          - authelia
-      vmagent_default: {}
+      - default
+      - traefik_default
+      - vmagent_default
     restart: always
     secrets:
       - authelia-users

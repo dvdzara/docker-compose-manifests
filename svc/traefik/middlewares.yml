@@ -1,6 +1,0 @@
-http:
-  middlewares:
-    cloudflaredHeaders:
-      headers:
-        customRequestHeaders:
-          X-Forwarded-Proto: https

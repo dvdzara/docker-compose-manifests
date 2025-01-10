@@ -5,11 +5,15 @@ certificatesResolvers:
         provider: cloudflare
       storage: /var/lib/traefik/certificates/acme.json
 entryPoints:
+  cloudflared:
+    address: :8081
+    forwardedHeaders:
+      trustedIPs:
+        - 172.16.0.0/12
   http:
     address: :8080
   https:
     address: :8443
-    asDefault: true
     http:
       tls:
         certResolver: letsencrypt
@@ -23,7 +27,7 @@ entryPoints:
     http3:
       advertisedPort: 443
   traefik:
-    address: :8000
+    address: :8082
 global:
   checkNewVersion: false
   sendAnonymousUsage: true

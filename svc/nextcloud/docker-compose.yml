@@ -121,7 +121,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.2-alpine@sha256:17143ad87797f511036cf8f50ada164aeb371f0d8068a172510549fb5d2cd65f
+    image: docker.io/library/postgres:17.2-alpine@sha256:0bcc5bbbb2aa9c9b4c6505845918c7eb55d783cf5c1f434fac33012579fb149d
     read_only: true
     restart: always
     security_opt:
@@ -146,7 +146,7 @@ services:
         - redis-cli
         - ping
       timeout: 5s
-    image: docker.io/library/redis:7.4.2-alpine@sha256:12129f2f3773d5aebc5f549ea14850bc59a6c0c1233d7598c2bc6984a83ded53
+    image: docker.io/library/redis:7.4.2-alpine@sha256:1bf97f21f01b0e7bd4b7b34a26d3b9d8086e41e70c10f262e8a9e0b49b5116a0
     read_only: true
     restart: always
     security_opt:

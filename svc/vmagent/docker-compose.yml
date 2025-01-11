@@ -21,7 +21,7 @@ services:
       - hosts.docker.internal:host-gateway
     group_add:
       - "993"
-    image: docker.io/victoriametrics/vmagent:v1.108.1-scratch@sha256:87f527d74dbd8301499fd3d06b1356d2a0582a9bb6d1758168c1c29591f4dafa
+    image: docker.io/victoriametrics/vmagent:v1.109.0-scratch@sha256:c1fb2cebbab3f88ec5e58bf28a6e352e8e93292b60d7e9fb84b5eae795bac998
     labels:
       victoriametrics.job: vmagent
       victoriametrics.port: 8429

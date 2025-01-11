@@ -36,7 +36,7 @@ services:
     image: docker.io/library/traefik:v3.3.1@sha256:b051db814cb18a7533fa9e645ae9bcbe5bf3c8136df2a7f7898329760c4206a9
     labels:
       victoriametrics.job: traefik
-      victoriametrics.port: 8002
+      victoriametrics.port: 8082
     networks:
       traefik_default:
         aliases:

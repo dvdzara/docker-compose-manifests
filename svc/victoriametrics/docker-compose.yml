@@ -10,7 +10,7 @@ services:
       - ALL
     command:
       - -retentionPeriod=90d
-    image: docker.io/victoriametrics/victoria-metrics:v1.108.1-scratch@sha256:7a6b03e68688b69b24aa06ac6a2b3d09ee6116968006a4340250f5e7bf9be1d1
+    image: docker.io/victoriametrics/victoria-metrics:v1.109.0-scratch@sha256:43ec3b9c38976ad19ea4d039b4d646d0a6d85f74e08a2da0513a95a1e14a7a9c
     labels:
       traefik.enable: true
       traefik.http.routers.victoriametrics.entrypoints: http

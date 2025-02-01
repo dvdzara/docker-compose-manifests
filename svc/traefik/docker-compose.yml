@@ -33,7 +33,7 @@ services:
         - traefik
         - healthcheck
       timeout: 5s
-    image: docker.io/library/traefik:v3.3.3@sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb
+    image: docker.io/library/traefik:v3.3.3@sha256:f1fdee7fda041872cff24e36a08f45ca53f006ded88f743a8e30e3d87ca52b48
     labels:
       victoriametrics.job: traefik
       victoriametrics.port: 8082

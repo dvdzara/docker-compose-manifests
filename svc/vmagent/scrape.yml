@@ -25,7 +25,12 @@ scrape_configs:
       - action: labelmap
         regex: __meta_docker_container_label_victoriametrics_job
         replacement: job
-      # Set the port specified by the user.
+      # Allow to set a custom metrics path with the victoriametrics.path label.
+      - action: labelmap
+        regex: __meta_docker_container_label_victoriametrics_path
+        replacement: __metrics_path__
+      # Set the port specified by the user for the vmagent_default and the host
+      # networks.
       - action: replace
         if: '{__meta_docker_network_name="vmagent_default"}'
         regex: ([^:]+):\d+;(\d+)

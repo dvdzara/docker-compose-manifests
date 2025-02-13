@@ -54,8 +54,6 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
-    tmpfs:
-      - /.yarn:uid=21127,gid=21127
     user: 21127:21127
     volumes:
       - data:/var/lib/outline/data

@@ -62,7 +62,7 @@ services:
       OVERWRITECLIURL: http://caddy:3000
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.6-fpm-alpine@sha256:c6aec29dc9305b1cc1e44c93eb5f9c0e3b5dafc4b1efe827c579e6de1930b802
+    image: docker.io/library/nextcloud:30.0.6-fpm-alpine@sha256:7f3b02d57be1b73279dd439e1c8773314e042b1aa8961d58b89aa6ac8c0bab00
     restart: always
     security_opt:
       - no-new-privileges:true
@@ -121,7 +121,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.3-alpine@sha256:63d02e405f2f1780189dda1220301f90be02d191d7fb06a2a54c56efbe742092
+    image: docker.io/library/postgres:17.3-alpine@sha256:19d45ecfb59f9ff8f440ee99d378abcea273b7d66bbac1cf1f9d6e41d8dcb3f3
     read_only: true
     restart: always
     security_opt:
@@ -146,7 +146,7 @@ services:
         - redis-cli
         - ping
       timeout: 5s
-    image: docker.io/library/redis:7.4.2-alpine@sha256:05c26214b0991329c8c68d93294268995f67a034c57d1ddbfbdf76a43de3ddcb
+    image: docker.io/library/redis:7.4.2-alpine@sha256:070d47a7fc389d7cf74257f76bfb57591f470f685eb4637c85f0a587534a4f26
     read_only: true
     restart: always
     security_opt:

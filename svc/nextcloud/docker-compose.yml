@@ -62,7 +62,7 @@ services:
       OVERWRITECLIURL: http://caddy:3000
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
-    image: docker.io/library/nextcloud:30.0.6-fpm-alpine@sha256:7f3b02d57be1b73279dd439e1c8773314e042b1aa8961d58b89aa6ac8c0bab00
+    image: docker.io/library/nextcloud:30.0.6-fpm-alpine@sha256:3a6b0ed6a09179da740ab5ffd86728fd6d881e75a260d74714f273fad7ca7c65
     restart: always
     security_opt:
       - no-new-privileges:true

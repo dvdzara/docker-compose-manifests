@@ -58,7 +58,7 @@ services:
         - CMD
         - /app/healthcheck.sh
       timeout: 5s
-    image: docker.io/authelia/authelia:4.38.18@sha256:a5e6fa4b1dbdc296f80f9175157b145a0598690ec8cd4d6e105cd4498fe0c731
+    image: docker.io/authelia/authelia:4.38.19@sha256:46021dc20efdcc5cdc38a29e3050b8835429a155ae6215388ed3b793a02eb0ab
     labels:
       traefik.enable: true
       traefik.http.routers.authelia.entrypoints: cloudflared
@@ -91,7 +91,7 @@ services:
         - CMD
         - pg_isready
       timeout: 5s
-    image: docker.io/library/postgres:17.3-alpine@sha256:19d45ecfb59f9ff8f440ee99d378abcea273b7d66bbac1cf1f9d6e41d8dcb3f3
+    image: docker.io/library/postgres:17.3-alpine@sha256:80d3d7d6bb3ddb1e44b79612330f7bfc6c451f093f6dd14a1317e777a260b602
     read_only: true
     restart: always
     security_opt:
@@ -116,7 +116,7 @@ services:
         - redis-cli
         - ping
       timeout: 5s
-    image: docker.io/library/redis:7.4.2-alpine@sha256:070d47a7fc389d7cf74257f76bfb57591f470f685eb4637c85f0a587534a4f26
+    image: docker.io/library/redis:7.4.2-alpine@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952
     read_only: true
     restart: always
     security_opt:

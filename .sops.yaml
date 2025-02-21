@@ -1,0 +1,12 @@
+creation_rules:
+  # Generate a secret key with age-keygen -o /workspace/age-secret-key.txt and
+  # replace the key below with your public key.
+  - age: age1rpnu04l6ytd0mqvunpf6q35t3kjutjlyxwjkgjftdkcxjt5m246sk8hwqd
+    path_regex: kubernetes/.+/generated/secrets/.+
+  - age: age1rpnu04l6ytd0mqvunpf6q35t3kjutjlyxwjkgjftdkcxjt5m246sk8hwqd
+    encrypted_regex: ^(data|stringData)$
+    path_regex: kubernetes/.+/secrets/.+\.yaml
+
+stores:
+  yaml:
+    indent: 2

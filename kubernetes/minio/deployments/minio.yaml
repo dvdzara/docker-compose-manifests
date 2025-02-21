@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+spec:
+  selector:
+    matchLabels:
+      zarantonello.dev/app: minio
+      zarantonello.dev/namespace: minio
+  # RollingUpdate strategy wouldn't work because the persistent volume cannot be
+  # read by 2 replicas.
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        zarantonello.dev/app: minio
+        zarantonello.dev/namespace: minio
+    spec:
+      containers:
+        - args:
+            - server
+          env:
+            - name: MINIO_VOLUMES
+              value: /var/lib/minio/data
+            - name: MINIO_BROWSER_REDIRECT_URL
+              value: https://minio.zarantonello.dev
+            - name: MINIO_CONSOLE_ADDRESS
+              value: :9001
+          envFrom:
+            - secretRef:
+                name: minio-root-credentials
+          image: quay.io/minio/minio:RELEASE.2025-02-18T16-25-55Z@sha256:1df91be8d6a6146001cd6be2569a12785a8ece583b511f56ebed08f1e65d3611
+          name: minio
+          ports:
+            - containerPort: 9000
+              name: http-s3
+            - containerPort: 9001
+              name: http-dashboard
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /var/lib/minio/data
+              name: minio-data
+      enableServiceLinks: false
+      securityContext:
+        fsGroup: 43251
+        runAsGroup: 43251
+        runAsNonRoot: true
+        runAsUser: 43251
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: minio-data
+          persistentVolumeClaim:
+            claimName: minio-data

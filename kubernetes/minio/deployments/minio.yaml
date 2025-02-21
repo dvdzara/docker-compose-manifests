@@ -55,6 +55,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
-        - persistentVolumeClaim:
+        - name: minio-data
+          persistentVolumeClaim:
             claimName: minio-data
-          name: minio-data

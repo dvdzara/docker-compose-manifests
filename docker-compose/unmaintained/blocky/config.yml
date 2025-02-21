@@ -1,0 +1,54 @@
+blocking:
+  blockType: nxDomain
+  clientGroupsBlock:
+    default:
+      - default
+  denylists:
+    default:
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/dyndns.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/fake-onlydomains.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/gambling.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/hoster-onlydomains.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.samsung.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.tiktok.extended.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.winoffice.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.xiaomi.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.plus.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.txt
+  loading:
+    concurrency: 2
+    downloads:
+      cooldown: 10s
+      timeout: 60s
+    refreshPeriod: 72h
+bootstrapDns:
+  - tcp+udp:1.1.1.1
+caching:
+  prefetching: true
+customDNS:
+  mapping:
+    grafana.zarantonello.net: 100.106.32.89
+    hp2420.srv.zarantonello.dev: 100.81.212.20
+    igl.zarantonello.dev: 100.106.32.89
+    minio.zarantonello.dev: 100.81.212.20
+    photos.zarantonello.net: 100.106.32.89
+    s3.zarantonello.dev: 100.81.212.20
+    vault.zarantonello.net: 100.106.32.89
+    victoriametrics.zarantonello.net: 100.106.32.89
+    x555sj.srv.zarantonello.dev: 100.106.32.89
+fqdnOnly:
+  enable: true
+log:
+  format: json
+ports:
+  dns: 100.65.70.35:53
+  http: 8080
+prometheus:
+  enable: true
+queryLog:
+  type: none
+upstreams:
+  groups:
+    default:
+      - tcp-tls:one.one.one.one:853
+  strategy: random

@@ -1,0 +1,65 @@
+# yamllint disable rule:key-ordering
+
+# Put this file in /etc/rancher/k3s/config.yaml and other required files in
+# their respective directories and other required files in their respective
+# directories.
+# Then run `curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest sh -` to
+# install the first server.
+
+# For IPv6 chose any random ULA, it will be masqueraded by flannel when needed.
+cluster-cidr: 10.42.0.0/16,fdd2:49b9:30ba:42::/108
+service-cidr: 10.43.0.0/16,fdd2:49b9:30ba:43::/108
+flannel-ipv6-masq: true
+
+cluster-domain: cluster-0.zarantonello.dev
+# Encrypt secrets when they are stored on the filesystem.
+secrets-encryption: true
+selinux: true
+
+# We don't need or we want to use a different configuration for these
+# components.
+disable-helm-controller: true
+disable:
+  - servicelb
+  - traefik
+  - local-storage
+  - metrics-server
+  - runtimes
+
+# Use k3s tailscale integration for inter-node connectivity.
+#
+# In the tailscale dashboard create a new key by setting pre-approve and
+# ephemeral to true. After that remember to renovate it every 90 days.
+vpn-auth: name=tailscale,joinKey= ,extraArgs=--ssh # tailscale auth key
+node-external-ip: # tailscale ip
+
+# Example of secure PSA:
+#
+# apiVersion: apiserver.config.k8s.io/v1
+# kind: AdmissionConfiguration
+# plugins:
+#   - name: PodSecurity
+#     configuration:
+#       apiVersion: pod-security.admission.config.k8s.io/v1beta1
+#       kind: PodSecurityConfiguration
+#       defaults:
+#         enforce: restricted
+#         enforce-version: latest
+#         audit: restricted
+#         audit-version: latest
+#         warn: restricted
+#         warn-version: latest
+#       exemptions:
+#         usernames: []
+#         runtimeClasses: []
+#         namespaces: [kube-system]
+kube-apiserver-arg:
+  - admission-control-config-file=/var/lib/rancher/k3s/server/psa.yml
+
+# Inside /etc/sysctl.d/90-kubelet.conf
+#
+# vm.panic_on_oom=0
+# vm.overcommit_memory=1
+# kernel.panic=10
+# kernel.panic_on_oops=1
+protect-kernel-defaults: true

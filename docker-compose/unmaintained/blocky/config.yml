@@ -41,7 +41,7 @@ fqdnOnly:
 log:
   format: json
 ports:
-  dns: 53
+  dns: 100.65.70.35:53
   http: 8080
 prometheus:
   enable: true

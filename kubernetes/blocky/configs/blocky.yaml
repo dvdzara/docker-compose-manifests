@@ -26,15 +26,17 @@ bootstrapDns:
 caching:
   prefetching: true
 customDNS:
+  # yamllint disable rule:key-ordering
   mapping:
     # websites
-    grafana.zarantonello.net: 100.106.32.89
-    minio.zarantonello.dev: 100.81.212.20
-    photos.zarantonello.net: 100.106.32.89
-    vault.zarantonello.net: 100.106.32.89
+    grafana.zarantonello.net: 100.106.32.89,fd7a:115c:a1e0::f401:f415
+    minio.zarantonello.dev: 100.81.212.20,fd7a:115c:a1e0::7301:d415
+    photos.zarantonello.net: 100.106.32.89,fd7a:115c:a1e0::f401:f415
+    vault.zarantonello.net: 100.106.32.89,fd7a:115c:a1e0::f401:f415
     # servers
-    x555sj.srv.zarantonello.dev: 100.106.32.89
+    x555sj.srv.zarantonello.dev: 100.106.32.89,fd7a:115c:a1e0::f401:f415
     hp2420.srv.zarantonello.dev: 100.81.212.20
+  # yamllint enable rule:key-ordering
 fqdnOnly:
   enable: true
 ports:

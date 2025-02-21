@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-dashboard
+spec:
+  ports:
+    - port: 80
+      targetPort: http-dashboard
+  selector:
+    zarantonello.dev/app: minio
+    zarantonello.dev/namespace: minio

@@ -1,13 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    victoriametrics.job: blocky
-    victoriametrics.port: "8080"
   name: blocky
 spec:
   selector:
-    matchLabels: &matchLabels
+    matchLabels:
       zarantonello.dev/app: blocky
       zarantonello.dev/namespace: blocky
   # RollingUpdate strategy wouldn't work because the host port is occupied by
@@ -16,7 +13,11 @@ spec:
     type: Recreate
   template:
     metadata:
-      labels: *matchLabels
+      labels:
+        monitoring.zarantonello.dev/job: blocky
+        monitoring.zarantonello.dev/port: "8080"
+        zarantonello.dev/app: blocky
+        zarantonello.dev/namespace: blocky
     spec:
       containers:
         - image: ghcr.io/0xerr0r/blocky:0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
@@ -30,6 +31,8 @@ spec:
               hostPort: 53
               name: dns-udp
               protocol: UDP
+            - containerPort: 8080
+              name: http
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -38,20 +41,18 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
-            runAsGroup: 21575
-            runAsNonRoot: true
-            runAsUser: 21575
-            seccompProfile:
-              type: RuntimeDefault
           volumeMounts:
             - mountPath: /app/config.yml
-              name: blocky
+              name: blocky-config
               subPath: blocky.yaml
       enableServiceLinks: false
-      # Keep services bound to one node for now.
-      nodeSelector:
-        kubernetes.io/hostname: x555sj.srv.zarantonello.dev
+      securityContext:
+        runAsGroup: 21575
+        runAsNonRoot: true
+        runAsUser: 21575
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - configMap:
             name: blocky
-          name: blocky
+          name: blocky-config

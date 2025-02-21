@@ -1,3 +1,5 @@
+# yamllint disable rule:key-ordering
+
 # Put this file in /etc/rancher/k3s/config.yaml and other required files in
 # their respective directories and other required files in their respective
 # directories.

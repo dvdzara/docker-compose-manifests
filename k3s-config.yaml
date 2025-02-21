@@ -54,12 +54,10 @@ node-external-ip: # tailscale ip
 kube-apiserver-arg:
   - admission-control-config-file=/var/lib/rancher/k3s/server/psa.yml
 
-
 # Inside /etc/sysctl.d/90-kubelet.conf
-# 
+#
 # vm.panic_on_oom=0
 # vm.overcommit_memory=1
 # kernel.panic=10
 # kernel.panic_on_oops=1
 protect-kernel-defaults: true
-

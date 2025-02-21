@@ -7,6 +7,8 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 100G
+  local:
+    path: /var/lib/rancher/k3s/volumes/minio-data
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -15,5 +17,3 @@ spec:
               operator: In
               values:
                 - x555sj.srv.zarantonello.dev
-  local:
-    path: /var/lib/rancher/k3s/volumes/minio-data

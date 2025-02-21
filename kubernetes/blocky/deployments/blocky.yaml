@@ -51,9 +51,6 @@ spec:
               name: blocky-config
               subPath: blocky.yaml
       enableServiceLinks: false
-      # Keep services bound to one node for now.
-      nodeSelector:
-        kubernetes.io/hostname: x555sj.srv.zarantonello.dev
       volumes:
         - configMap:
             name: blocky

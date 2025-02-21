@@ -44,6 +44,7 @@ spec:
               subPath: alloy.alloy
             - mountPath: /var/lib/alloy
               name: alloy-data
+      enableServiceLinks: false
       securityContext:
         fsGroup: 38082
         runAsGroup: 38082
@@ -52,7 +53,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       serviceAccountName: alloy
-      enableServiceLinks: false
       volumes:
         - configMap:
             name: alloy

@@ -22,7 +22,7 @@ spec:
           envFrom:
             - secretRef:
                 name: mimir-s3-credentials
-          image: docker.io/grafana/mimir:2.14.3
+          image: docker.io/grafana/mimir:2.14.3@sha256:046ec57d9776bd27143af22d20201d2c7806dca34254cc45673ced172ed76faf
           name: mimir
           ports:
             - containerPort: 8080

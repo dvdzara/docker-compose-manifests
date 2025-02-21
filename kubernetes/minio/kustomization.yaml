@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: minio
+resources:
+  - deployments/minio.yaml
+  - namespace.yaml
+  - persistent-volume-claims/minio-data.yaml
+  - persistent-volumes/minio-data.yaml
+  - service-accounts/default.yaml
+  - services/minio-dashboard.yaml
+  - services/minio-s3.yaml
+secretGenerator:
+  - env: generated/secrets/minio-root-credentials.env
+    name: minio-root-credentials

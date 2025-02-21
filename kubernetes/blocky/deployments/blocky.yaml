@@ -41,16 +41,17 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
-            runAsGroup: 21575
-            runAsNonRoot: true
-            runAsUser: 21575
-            seccompProfile:
-              type: RuntimeDefault
           volumeMounts:
             - mountPath: /app/config.yml
               name: blocky-config
               subPath: blocky.yaml
       enableServiceLinks: false
+      securityContext:
+        runAsGroup: 21575
+        runAsNonRoot: true
+        runAsUser: 21575
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - configMap:
             name: blocky

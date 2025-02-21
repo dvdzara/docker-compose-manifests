@@ -1,6 +1,6 @@
-# Alloy
+# Monitoring
 
-Log and metrics collector.
+Log and metrics collection.
 
-Logs are sent to a loki instance while metrics are sent to victoriametrics, then
-they are all visualized by grafana.
+Logs and metrics are collected by alloy are sent to a loki or victoriametrics
+instance, then they are all visualized by grafana.

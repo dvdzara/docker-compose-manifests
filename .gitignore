@@ -1,1 +1,5 @@
+# They usually store secrets for docker compose.
 **/.env
+
+# Don't publish your age secret key.
+age-secret-key.txt

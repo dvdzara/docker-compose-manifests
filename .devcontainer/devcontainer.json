@@ -1,10 +1,14 @@
 {
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
   "customizations": {
     "vscode": {
-      "extensions": ["esbenp.prettier-vscode", "redhat.vscode-yaml"]
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "redhat.vscode-yaml"
+      ]
     }
-  }
+  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace"
 }

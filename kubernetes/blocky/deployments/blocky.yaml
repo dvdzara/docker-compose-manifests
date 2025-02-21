@@ -10,6 +10,10 @@ spec:
     matchLabels: &matchLabels
       zarantonello.dev/app: blocky
       zarantonello.dev/namespace: blocky
+  # RollingUpdate strategy wouldn't work because the host port is occupied by
+  # the instance that is already running.
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels: *matchLabels
@@ -51,7 +55,3 @@ spec:
         - configMap:
             name: blocky
           name: blocky
-  # RollingUpdate strategy wouldn't work because the host port is occupied by
-  # the instance that is already running.
-  strategy:
-    type: Recreate

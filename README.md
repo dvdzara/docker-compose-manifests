@@ -1,6 +1,6 @@
-# Docker compose manifests
+# Infrastructure as code manifests
 
-I use these manifests to deploy services on my server.
+These files describe the things that I deploy on my homelab.
 
 ## Tools needed for kubernetes
 

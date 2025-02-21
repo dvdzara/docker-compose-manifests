@@ -7,6 +7,10 @@
     "customManagers:dockerfileVersions",
     "customManagers:githubActionsVersions"
   ],
+  "ignorePaths": ["docker-compose/unmaintained"],
+  "kubernetes": {
+    "fileMatch": ["kubernetes/.+\\.yaml$"]
+  },
   "packageRules": [
     {
       "automerge": true,
@@ -16,6 +20,11 @@
       "matchPackageNames": ["ghcr.io/immich-app/*"],
       "groupSlug": "immich",
       "groupName": "immich"
+    },
+    {
+      "matchPackageNames": ["docker.io/woodpeckerci/*"],
+      "groupSlug": "woodpecker",
+      "groupName": "woodpecker"
     }
   ]
 }

@@ -1,8 +1,3 @@
-logging {
-  level  = "info"
-  format = "logfmt"
-}
-
 discovery.kubernetes "pods" {
   role = "pod"
 
@@ -34,12 +29,12 @@ discovery.relabel "kubernetes_pods" {
 }
 
 prometheus.scrape "kubernetes" {
-  forward_to = [prometheus.remote_write.victoriametrics.receiver]
+  forward_to = [prometheus.remote_write.mimir.receiver]
   targets = discovery.relabel.kubernetes_pods.output
 }
 
-prometheus.remote_write "victoriametrics" {
+prometheus.remote_write "mimir" {
   endpoint {
-    url = "http://victoriametrics.monitoring.cluster-0.zarantonello.dev"
+    url = "http://mimir.monitoring.svc.cluster-0.zarantonello.dev/api/v1/push"
   }
 }

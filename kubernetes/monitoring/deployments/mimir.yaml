@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mimir
+spec:
+  selector:
+    matchLabels:
+      zarantonello.dev/app: mimir
+      zarantonello.dev/namespace: monitoring
+  template:
+    metadata:
+      labels:
+        monitoring.zarantonello.dev/job: mimir
+        monitoring.zarantonello.dev/port: "8080"
+        zarantonello.dev/app: mimir
+        zarantonello.dev/namespace: monitoring
+    spec:
+      containers:
+        - args:
+            - -config.expand-env=true
+            - -config.file=/etc/mimir/mimir.yaml
+          envFrom:
+            - secretRef:
+                name: mimir-s3-credentials
+          image: docker.io/grafana/mimir:2.14.3
+          name: mimir
+          ports:
+            - containerPort: 8080
+              name: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /etc/mimir
+              name: mimir-config
+            - mountPath: /var/tmp/mimir
+              name: mimir-tmp
+            - mountPath: /var/lib/mimir
+              name: mimir-data
+      enableServiceLinks: false
+      securityContext:
+        fsGroup: 29201
+        runAsGroup: 29201
+        runAsNonRoot: true
+        runAsUser: 29201
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - configMap:
+            name: mimir
+          name: mimir-config
+        - emptyDir: {}
+          name: mimir-tmp
+        - name: mimir-data
+          persistentVolumeClaim:
+            claimName: mimir-data

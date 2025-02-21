@@ -3,6 +3,9 @@ configMapGenerator:
   - files:
       - generated/configs/alloy.alloy
     name: alloy
+  - files:
+      - generated/configs/mimir.yaml
+    name: mimir
 kind: Kustomization
 namespace: monitoring
 resources:
@@ -11,4 +14,11 @@ resources:
   - daemon-sets/alloy.yaml
   - namespace.yaml
   - service-accounts/alloy.yml
+  - services/mimir.yaml
+  - deployments/mimir.yaml
   - service-accounts/default.yml
+  - persistent-volume-claims/mimir-data.yaml
+  - persistent-volumes/mimir-data.yaml
+secretGenerator:
+  - env: generated/secrets/mimir-s3-credentials.env
+    name: mimir-s3-credentials

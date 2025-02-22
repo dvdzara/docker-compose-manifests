@@ -20,5 +20,6 @@ resources:
   - persistent-volume-claims/mimir-data.yaml
   - persistent-volumes/mimir-data.yaml
 secretGenerator:
-  - env: generated/secrets/mimir-s3-credentials.env
+  - envs:
+      - generated/secrets/mimir-s3-credentials.env
     name: mimir-s3-credentials

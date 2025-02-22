@@ -4,8 +4,9 @@ metadata:
   name: minio-s3
 spec:
   ports:
-    - port: 80
+    - name: http
+      port: 80
       targetPort: http-s3
   selector:
-    zarantonello.dev/app: minio
-    zarantonello.dev/namespace: minio
+    apps.zarantonello.dev/name: minio
+    apps.zarantonello.dev/namespace: minio

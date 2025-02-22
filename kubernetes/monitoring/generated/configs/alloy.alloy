@@ -19,6 +19,19 @@ discovery.relabel "kubernetes_pods" {
     replacement = "job"
   }
 
+
+  rule {
+    action = "labelmap"
+    regex = "__meta_kubernetes_namespace"
+    replacement = "namespace"
+  }
+
+  rule {
+    action = "labelmap"
+    regex = "__meta_kubernetes_pod_node_name"
+    replacement = "node"
+  }
+
   rule {
     action = "replace"
     regex = "([^:]+):[0-9]+;([0-9]+)"

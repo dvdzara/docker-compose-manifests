@@ -4,9 +4,11 @@ These files describe the things that I deploy on my homelab.
 
 ## Tools needed for kubernetes
 
-- kubectl
-- sops (secret encryption): [https://github.com/getsops/sop]
 - age (generate key for sops): [https://github.com/FiloSottile/age]
+- helm
+- kubectl
+- kustomize
+- sops (secret encryption): [https://github.com/getsops/sop]
 
 ## Secrets
 

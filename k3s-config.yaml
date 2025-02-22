@@ -20,7 +20,6 @@ selinux: true
 # components.
 disable-helm-controller: true
 disable:
-  - servicelb
   - traefik
   - local-storage
   - metrics-server

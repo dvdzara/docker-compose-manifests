@@ -5,15 +5,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      zarantonello.dev/app: alloy
-      zarantonello.dev/namespace: alloy
+      apps.zarantonello.dev/name: alloy
+      apps.zarantonello.dev/namespace: alloy
   template:
     metadata:
       labels:
+        apps.zarantonello.dev/name: alloy
+        apps.zarantonello.dev/namespace: alloy
         monitoring.zarantonello.dev/job: alloy
         monitoring.zarantonello.dev/port: "12345"
-        zarantonello.dev/app: alloy
-        zarantonello.dev/namespace: alloy
     spec:
       containers:
         - args:

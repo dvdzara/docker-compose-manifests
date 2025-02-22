@@ -5,8 +5,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      zarantonello.dev/app: minio
-      zarantonello.dev/namespace: minio
+      apps.zarantonello.dev/name: minio
+      apps.zarantonello.dev/namespace: minio
   # RollingUpdate strategy wouldn't work because the persistent volume cannot be
   # read by 2 replicas.
   strategy:
@@ -14,8 +14,8 @@ spec:
   template:
     metadata:
       labels:
-        zarantonello.dev/app: minio
-        zarantonello.dev/namespace: minio
+        apps.zarantonello.dev/name: minio
+        apps.zarantonello.dev/namespace: minio
     spec:
       containers:
         - args:

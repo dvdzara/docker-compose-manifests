@@ -5,30 +5,24 @@ metadata:
 spec:
   selector:
     matchLabels:
-      zarantonello.dev/app: blocky
-      zarantonello.dev/namespace: blocky
-  # RollingUpdate strategy wouldn't work because the host port is occupied by
-  # the instance that is already running.
-  strategy:
-    type: Recreate
+      apps.zarantonello.dev/name: blocky
+      apps.zarantonello.dev/namespace: blocky
   template:
     metadata:
       labels:
+        apps.zarantonello.dev/name: blocky
+        apps.zarantonello.dev/namespace: blocky
         monitoring.zarantonello.dev/job: blocky
         monitoring.zarantonello.dev/port: "8080"
-        zarantonello.dev/app: blocky
-        zarantonello.dev/namespace: blocky
     spec:
       containers:
         - image: ghcr.io/0xerr0r/blocky:0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
           name: blocky
           ports:
             - containerPort: 53
-              hostPort: 53
               name: dns-tcp
               protocol: TCP
             - containerPort: 53
-              hostPort: 53
               name: dns-udp
               protocol: UDP
             - containerPort: 8080
@@ -45,7 +39,6 @@ spec:
             - mountPath: /app/config.yml
               name: blocky-config
               subPath: blocky.yaml
-      enableServiceLinks: false
       securityContext:
         runAsGroup: 21575
         runAsNonRoot: true

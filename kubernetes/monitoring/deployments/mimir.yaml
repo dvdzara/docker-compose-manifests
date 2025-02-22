@@ -5,15 +5,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      zarantonello.dev/app: mimir
-      zarantonello.dev/namespace: monitoring
+      apps.zarantonello.dev/name: mimir
+      apps.zarantonello.dev/namespace: monitoring
   template:
     metadata:
       labels:
+        apps.zarantonello.dev/name: mimir
+        apps.zarantonello.dev/namespace: monitoring
         monitoring.zarantonello.dev/job: mimir
         monitoring.zarantonello.dev/port: "8080"
-        zarantonello.dev/app: mimir
-        zarantonello.dev/namespace: monitoring
     spec:
       containers:
         - args:

@@ -31,7 +31,7 @@ spec:
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /tmp
-              name: source-controller-tmp
+              name: kustomize-controller-tmp
       securityContext:
         fsGroup: 28700
         runAsGroup: 28700
@@ -42,4 +42,4 @@ spec:
       serviceAccountName: kustomize-controller
       volumes:
         - emptyDir: {}
-          name: source-controller-tmp
+          name: kustomize-controller-tmp

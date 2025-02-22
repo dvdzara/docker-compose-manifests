@@ -9,3 +9,4 @@ resources:
   - deployments/blocky.yaml
   - namespace.yaml
   - service-accounts/default.yaml
+  - services/blocky-dns.yaml

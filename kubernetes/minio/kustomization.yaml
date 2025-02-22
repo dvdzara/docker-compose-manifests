@@ -10,5 +10,6 @@ resources:
   - services/minio-dashboard.yaml
   - services/minio-s3.yaml
 secretGenerator:
-  - env: generated/secrets/minio-root-credentials.env
+  - envs:
+      - generated/secrets/minio-root-credentials.env
     name: minio-root-credentials

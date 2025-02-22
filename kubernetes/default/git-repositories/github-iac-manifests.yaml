@@ -1,8 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: podinfo
-  namespace: default
+  name: github-iac-manifests
 spec:
   interval: 10m
   ref:

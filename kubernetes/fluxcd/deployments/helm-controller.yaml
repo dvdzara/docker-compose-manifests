@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helm-controller
+spec:
+  selector:
+    matchLabels:
+      apps.zarantonello.dev/name: helm-controller
+      apps.zarantonello.dev/namespace: fluxcd
+  template:
+    metadata:
+      labels:
+        apps.zarantonello.dev/name: helm-controller
+        apps.zarantonello.dev/namespace: fluxcd
+        monitoring.zarantonello.dev/job: helm-controller
+        monitoring.zarantonello.dev/port: "8080"
+    spec:
+      containers:
+        - args:
+            - --enable-leader-election
+          image: ghcr.io/fluxcd/helm-controller:v1.2.0
+          name: helm-controller
+          ports:
+            - containerPort: 8080
+              name: http-metrics
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 4936
+        runAsGroup: 4936
+        runAsNonRoot: true
+        runAsUser: 4936
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: helm-controller

@@ -29,6 +29,9 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /tmp
+              name: kustomize-controller-tmp
       securityContext:
         fsGroup: 28700
         runAsGroup: 28700
@@ -37,3 +40,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       serviceAccountName: kustomize-controller
+      volumes:
+        - emptyDir: {}
+          name: kustomize-controller-tmp

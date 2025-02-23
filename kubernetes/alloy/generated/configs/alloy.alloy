@@ -48,6 +48,6 @@ prometheus.scrape "kubernetes" {
 
 prometheus.remote_write "mimir" {
   endpoint {
-    url = "http://mimir.monitoring.svc.cluster-0.zarantonello.dev/api/v1/push"
+    url = "http://mimir.mimir.svc.cluster-0.zarantonello.dev/api/v1/push"
   }
 }

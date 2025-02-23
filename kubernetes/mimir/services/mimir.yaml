@@ -9,4 +9,4 @@ spec:
       targetPort: http
   selector:
     apps.zarantonello.dev/name: mimir
-    apps.zarantonello.dev/namespace: monitoring
+    apps.zarantonello.dev/namespace: mimir

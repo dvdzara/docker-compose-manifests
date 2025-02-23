@@ -6,12 +6,12 @@ spec:
   selector:
     matchLabels:
       apps.zarantonello.dev/name: postgres
-      apps.zarantonello.dev/namespace: grafana
+      apps.zarantonello.dev/namespace: outline
   template:
     metadata:
       labels:
         apps.zarantonello.dev/name: postgres
-        apps.zarantonello.dev/namespace: grafana
+        apps.zarantonello.dev/namespace: outline
     spec:
       containers:
         - envFrom:
@@ -29,7 +29,7 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: /var/lib/postgrsql/data
+            - mountPath: /var/lib/postgresql/data
               name: data
             - mountPath: /tmp
               name: tmp

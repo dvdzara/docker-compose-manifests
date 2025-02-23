@@ -21,3 +21,6 @@ secretGenerator:
   - envs:
       - generated/secrets/grafana.env
     name: grafana-env
+  - envs:
+      - generated/secrets/postres.env
+    name: postgres-env

@@ -11,7 +11,7 @@ resources:
   - persistent-volume-claims/mimir-data.yaml
   - persistent-volumes/mimir-data.yaml
   - service-accounts/default.yml
-  - services/mimir.yaml
+  - services/api.yaml
 secretGenerator:
   - envs:
       - generated/secrets/mimir-s3-credentials.env

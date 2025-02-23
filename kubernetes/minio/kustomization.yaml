@@ -7,8 +7,8 @@ resources:
   - persistent-volume-claims/minio-data.yaml
   - persistent-volumes/minio-data.yaml
   - service-accounts/default.yaml
-  - services/minio-dashboard.yaml
-  - services/minio-s3.yaml
+  - services/dashboard.yaml
+  - services/s3.yaml
 secretGenerator:
   - envs:
       - generated/secrets/minio-root-credentials.env

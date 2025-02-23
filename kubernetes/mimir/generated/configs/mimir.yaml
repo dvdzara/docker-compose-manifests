@@ -15,7 +15,7 @@ common:
       access_key_id: ${S3_ACCESS_KEY_ID}
       bucket_lookup_type: path
       bucket_name: mimir
-      endpoint: minio-s3.minio.svc.cluster-0.zarantonello.dev
+      endpoint: s3.minio.svc.cluster-0.zarantonello.dev
       insecure: true
       secret_access_key: ${S3_SECRET_ACCESS_KEY}
 

@@ -35,9 +35,10 @@ spec:
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /tmp
-              name: source-controller-tmp
+              name: tmp
             - mountPath: /data
-              name: source-controller-data
+              name: data
+      enableServiceLinks: false
       securityContext:
         fsGroup: 20791
         runAsGroup: 20791
@@ -48,6 +49,6 @@ spec:
       serviceAccountName: source-controller
       volumes:
         - emptyDir: {}
-          name: source-controller-tmp
+          name: tmp
         - emptyDir: {}
-          name: source-controller-data
+          name: data

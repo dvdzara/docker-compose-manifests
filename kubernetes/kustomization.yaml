@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - alloy
   - blocky
+  - cert-manager
   - default
   - fluxcd
   - mimir

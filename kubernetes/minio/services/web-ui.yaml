@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dashboard
+  name: web-ui
 spec:
   ports:
     - name: http
       port: 80
-      targetPort: http-dashboard
+      targetPort: http-web-ui
   selector:
     apps.zarantonello.dev/name: minio
     apps.zarantonello.dev/namespace: minio

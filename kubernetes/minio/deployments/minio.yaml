@@ -36,7 +36,7 @@ spec:
             - containerPort: 9000
               name: http-s3
             - containerPort: 9001
-              name: http-dashboard
+              name: http-web-ui
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

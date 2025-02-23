@@ -1,0 +1,6 @@
+apiVersion: 1
+datasources:
+  - isDefault: true
+    name: Mimir
+    type: prometheus
+    url: http://api.mimir.svc.cluster-0.zarantonello.dev

@@ -50,7 +50,7 @@ spec:
           type: RuntimeDefault
       volumes:
         - configMap:
-            name: mimir
+            name: mimir-config
           name: config
         - emptyDir: {}
           name: tmp

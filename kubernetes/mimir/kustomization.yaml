@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 configMapGenerator:
   - files:
       - generated/configs/mimir.yaml
-    name: mimir
+    name: mimir-config
 kind: Kustomization
 namespace: mimir
 resources:

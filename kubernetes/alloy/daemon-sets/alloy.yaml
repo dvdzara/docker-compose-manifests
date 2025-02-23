@@ -19,7 +19,7 @@ spec:
         - args:
             - run
             - --server.http.listen-addr=[::]:12345
-            - --storage.path=/var/lib/alloy/data
+            - --storage.path=/var/tmp/alloy/data
             - /etc/alloy/alloy.alloy
           env:
             # Let alloy know what is the hostname of the node its running on.
@@ -40,10 +40,10 @@ spec:
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /etc/alloy/alloy.alloy
-              name: alloy-config
+              name: config
               subPath: alloy.alloy
-            - mountPath: /var/lib/alloy
-              name: alloy-data
+            - mountPath: /var/tmp/alloy
+              name: tmp
       enableServiceLinks: false
       securityContext:
         fsGroup: 38082
@@ -56,9 +56,8 @@ spec:
       volumes:
         - configMap:
             name: alloy
-          name: alloy-config
-        # Just need to persist stuff until it is sent to loki or
-        # victoriametrics. It's not important if we lose some minutes worth
-        # of data.
+          name: config
+        # Just need to persist stuff until it is sent to loki or mimir. It's not
+        # important if we lose some minutes worth of data.
         - emptyDir: {}
-          name: alloy-data
+          name: tmp

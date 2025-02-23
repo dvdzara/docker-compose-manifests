@@ -31,7 +31,8 @@ spec:
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /tmp
-              name: helm-controller-tmp
+              name: tmp
+      enableServiceLinks: false
       securityContext:
         fsGroup: 4936
         runAsGroup: 4936
@@ -42,4 +43,4 @@ spec:
       serviceAccountName: helm-controller
       volumes:
         - emptyDir: {}
-          name: helm-controller-tmp
+          name: tmp

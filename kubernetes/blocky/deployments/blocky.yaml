@@ -42,8 +42,9 @@ spec:
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /app/config.yml
-              name: blocky-config
+              name: config
               subPath: blocky.yaml
+      enableServiceLinks: false
       securityContext:
         runAsGroup: 21575
         runAsNonRoot: true
@@ -53,4 +54,4 @@ spec:
       volumes:
         - configMap:
             name: blocky
-          name: blocky-config
+          name: config

@@ -45,7 +45,7 @@ spec:
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /var/lib/minio/data
-              name: minio-data
+              name: data
       enableServiceLinks: false
       securityContext:
         fsGroup: 43251
@@ -55,6 +55,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
-        - name: minio-data
+        - name: data
           persistentVolumeClaim:
             claimName: minio-data

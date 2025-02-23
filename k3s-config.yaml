@@ -3,23 +3,27 @@
 # Put this file in /etc/rancher/k3s/config.yaml and other required files in
 # their respective directories and other required files in their respective
 # directories.
-# Then run `curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest sh -` to
-# install the first server.
+# Then run `curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC= INSTALL_K3S_CHANNEL=latest sh -`
+# to install the first server or agent depending on the value of the
+# `INSTALL_K3S_EXEC` environment variable.
+#
+# If you want to restrict the load balacer creation only to certain nodes, set
+# the `svccontroller.k3s.cattle.io/enablelb=true` label on them.
 
 # For IPv6 chose any random ULA, it will be masqueraded by flannel when needed.
-cluster-cidr: 10.42.0.0/16,fdd2:49b9:30ba:42::/108
-service-cidr: 10.43.0.0/16,fdd2:49b9:30ba:43::/108
-flannel-ipv6-masq: true
+cluster-cidr: 10.42.0.0/16,fdd2:49b9:30ba:42::/64 # comment when installing agents
+service-cidr: 10.43.0.0/16,fdd2:49b9:30ba:43::/112 # comment when installing agents
+flannel-ipv6-masq: true # comment when installing agents
 
-cluster-domain: cluster-0.zarantonello.dev
+cluster-domain: cluster-0.zarantonello.dev # comment when installing agents
 # Encrypt secrets when they are stored on the filesystem.
-secrets-encryption: true
+secrets-encryption: true # comment when installing agents
 selinux: true
 
 # We don't need or we want to use a different configuration for these
 # components.
-disable-helm-controller: true
-disable:
+disable-helm-controller: true # comment when installing agents
+disable: # comment when installing agents
   - traefik
   - local-storage
   - metrics-server
@@ -29,7 +33,16 @@ disable:
 #
 # In the tailscale dashboard create a new key by setting pre-approve and
 # ephemeral to true. After that remember to renovate it every 90 days.
-vpn-auth: name=tailscale,joinKey= ,extraArgs=--ssh # tailscale auth key
+#
+# Also set these ACLs to auto approve new nodes that join the cluster:
+#
+# "autoApprovers": {
+#   "routes": {
+#     "10.42.0.0/16": ["your_account@xyz.com"],
+#     "fdd2:49b9:30ba:42::/64": ["your_account@xyz.com"],
+#   }
+# }
+vpn-auth: name=tailscale,joinKey= # tailscale auth key
 node-external-ip: # tailscale ip
 
 # Example of secure PSA:
@@ -52,7 +65,7 @@ node-external-ip: # tailscale ip
 #         usernames: []
 #         runtimeClasses: []
 #         namespaces: [kube-system]
-kube-apiserver-arg:
+kube-apiserver-arg: # comment when installing agents
   - admission-control-config-file=/var/lib/rancher/k3s/server/psa.yml
 
 # Inside /etc/sysctl.d/90-kubelet.conf
@@ -62,3 +75,7 @@ kube-apiserver-arg:
 # kernel.panic=10
 # kernel.panic_on_oops=1
 protect-kernel-defaults: true
+#
+# Uncomment and fill these to create an agent node.
+# server: https://:6443 # server tailscale ip
+# token: # server token

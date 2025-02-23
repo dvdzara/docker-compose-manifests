@@ -6,12 +6,12 @@ spec:
   selector:
     matchLabels:
       apps.zarantonello.dev/name: mimir
-      apps.zarantonello.dev/namespace: monitoring
+      apps.zarantonello.dev/namespace: mimir
   template:
     metadata:
       labels:
         apps.zarantonello.dev/name: mimir
-        apps.zarantonello.dev/namespace: monitoring
+        apps.zarantonello.dev/namespace: mimir
         monitoring.zarantonello.dev/job: mimir
         monitoring.zarantonello.dev/port: "8080"
     spec:

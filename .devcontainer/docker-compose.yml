@@ -1,4 +1,4 @@
-name: igl-website-devcontainer
+name: iac-manifests-devcontainer
 
 services:
   devcontainer:

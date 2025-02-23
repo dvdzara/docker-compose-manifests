@@ -75,7 +75,7 @@ kube-apiserver-arg: # comment when installing agents
 # kernel.panic=10
 # kernel.panic_on_oops=1
 protect-kernel-defaults: true
-
+#
 # Uncomment and fill these to create an agent node.
 # server: https://:6443 # server tailscale ip
 # token: # server token

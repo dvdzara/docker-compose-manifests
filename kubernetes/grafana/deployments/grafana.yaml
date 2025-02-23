@@ -19,6 +19,8 @@ spec:
         - envFrom:
             - secretRef:
                 name: grafana-env
+            - secretRef:
+                name: postgres-env
           image: docker.io/grafana/grafana:11.5.2@sha256:8b37a2f028f164ce7b9889e1765b9d6ee23fec80f871d156fbf436d6198d32b7
           name: grafana
           ports:

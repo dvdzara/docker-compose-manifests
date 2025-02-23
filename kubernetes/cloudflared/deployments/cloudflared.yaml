@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+spec:
+  selector:
+    matchLabels:
+      apps.zarantonello.dev/name: cloudflared
+      apps.zarantonello.dev/namespace: cloudflared
+  template:
+    metadata:
+      labels:
+        apps.zarantonello.dev/name: cloudflared
+        apps.zarantonello.dev/namespace: cloudflared
+    spec:
+      containers:
+        - args:
+            - tunnel
+            - run
+          env:
+            - name: NO_AUTOUPDATE
+              value: "true"
+          envFrom:
+            - secretRef:
+                name: grafana-env
+          image: docker.io/cloudflare/cloudflared:2025.2.0@sha256:6e2df069aaf5a8c0bf304b674ff31c0ed07c974534b4303a8c6e57d93c6c9224
+          name: cloudflared
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      enableServiceLinks: false
+      securityContext:
+        runAsGroup: 8266
+        runAsNonRoot: true
+        runAsUser: 8266
+        seccompProfile:
+          type: RuntimeDefault

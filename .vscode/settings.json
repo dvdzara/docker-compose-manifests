@@ -1,3 +1,6 @@
 {
+  "files.associations": {
+    "*.env": "properties"
+  },
   "yaml.keyOrdering": true
 }

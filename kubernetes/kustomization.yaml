@@ -4,8 +4,11 @@ resources:
   - alloy
   - blocky
   - cert-manager
+  - cloudflared
   - default
   - fluxcd
+  - grafana
   - mimir
   - minio
   - node-exporter
+  - outline

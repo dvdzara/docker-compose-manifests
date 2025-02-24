@@ -12,19 +12,23 @@ spec:
       labels:
         apps.zarantonello.dev/name: cloudflared
         apps.zarantonello.dev/namespace: cloudflared
+        monitoring.zarantonello.dev/job: cloudflared
+        monitoring.zarantonello.dev/port: "3000"
     spec:
       containers:
         - args:
             - tunnel
+            - --no-autoupdate
+            - --metrics=[::]:3000
             - run
-          env:
-            - name: NO_AUTOUPDATE
-              value: "true"
           envFrom:
             - secretRef:
                 name: cloudflared-env
           image: docker.io/cloudflare/cloudflared:2025.2.0@sha256:6e2df069aaf5a8c0bf304b674ff31c0ed07c974534b4303a8c6e57d93c6c9224
           name: cloudflared
+          ports:
+            - containerPort: 3000
+              name: http
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -33,8 +37,9 @@ spec:
             readOnlyRootFilesystem: true
       enableServiceLinks: false
       securityContext:
-        runAsGroup: 8266
+        fsGroup: 39607
+        runAsGroup: 39607
         runAsNonRoot: true
-        runAsUser: 8266
+        runAsUser: 39607
         seccompProfile:
           type: RuntimeDefault

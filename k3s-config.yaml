@@ -9,6 +9,11 @@
 #
 # If you want to restrict the load balacer creation only to certain nodes, set
 # the `svccontroller.k3s.cattle.io/enablelb=true` label on them.
+#
+# Add the file /etc/sysctl.d/85-quic.conf with the contents:
+#
+# net.core.rmem_max=7500000
+# net.core.wmem_max=7500000
 
 # For IPv6 chose any random ULA, it will be masqueraded by flannel when needed.
 cluster-cidr: 10.42.0.0/16,fdd2:49b9:30ba:42::/64 # comment when installing agents

@@ -13,3 +13,4 @@ resources:
   - minio
   - node-exporter
   - outline
+  - vaultwarden

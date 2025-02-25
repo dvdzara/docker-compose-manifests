@@ -22,13 +22,3 @@ vault.zarantonello.net {
 	encode gzip zstd
 	reverse_proxy vaultwarden:3000
 }
-
-igl.zarantonello.dev {
-	encode gzip zstd
-
-	reverse_proxy igl-website:3000 {
-		# Emulate these headers until website is moved to cloudflared.
-		header_up +CF-IPCountry "IT"
-		header_up +CF-Connecting-IP "127.0.0.1"
-	}
-}

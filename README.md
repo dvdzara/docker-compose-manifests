@@ -2,6 +2,8 @@
 
 These files describe the things that I deploy on my homelab.
 
+Services whose folder names start with `.` aren't currently deployed.
+
 ## Tools needed for kubernetes
 
 - age (generate key for sops): [https://github.com/FiloSottile/age]

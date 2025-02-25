@@ -16,4 +16,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - x555sj.srv.zarantonello.dev
+                - hz-0

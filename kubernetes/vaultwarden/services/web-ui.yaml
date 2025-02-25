@@ -8,5 +8,5 @@ spec:
       port: 80
       targetPort: http
   selector:
-    apps.zarantonello.dev/name: grafana
-    apps.zarantonello.dev/namespace: grafana
+    apps.zarantonello.dev/name: vaultwarden
+    apps.zarantonello.dev/namespace: vaultwarden

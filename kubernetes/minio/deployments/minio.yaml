@@ -7,8 +7,7 @@ spec:
     matchLabels:
       apps.zarantonello.dev/name: minio
       apps.zarantonello.dev/namespace: minio
-  # RollingUpdate strategy wouldn't work because the persistent volume cannot be
-  # read by 2 replicas.
+  # Persistent volume cannot be read by 2 replicas.
   strategy:
     type: Recreate
   template:
@@ -20,16 +19,11 @@ spec:
       containers:
         - args:
             - server
-          env:
-            - name: MINIO_VOLUMES
-              value: /var/lib/minio/data
-            - name: MINIO_BROWSER_REDIRECT_URL
-              value: https://minio.zarantonello.dev
-            - name: MINIO_CONSOLE_ADDRESS
-              value: :9001
           envFrom:
+            - configMapRef:
+                name: minio-env
             - secretRef:
-                name: minio-root-credentials
+                name: minio-env
           image: quay.io/minio/minio:RELEASE.2025-02-18T16-25-55Z@sha256:1df91be8d6a6146001cd6be2569a12785a8ece583b511f56ebed08f1e65d3611
           name: minio
           ports:
@@ -44,7 +38,7 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: /var/lib/minio/data
+            - mountPath: /data
               name: data
       enableServiceLinks: false
       securityContext:

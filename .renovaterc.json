@@ -7,7 +7,7 @@
     "customManagers:dockerfileVersions",
     "customManagers:githubActionsVersions"
   ],
-  "ignorePaths": ["docker-compose/\\.*", "kubernetes/\\.*"],
+  "ignorePaths": [".unmaintained/.*"],
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.yaml$"]
   },

@@ -18,7 +18,7 @@ spec:
       containers:
         - args:
             - --enable-leader-election
-          image: ghcr.io/fluxcd/kustomize-controller:v1.5.0@sha256:590deed942202f1e4097b9996a4d2892995605af94f730635169c7f15f9e79e3
+          image: ghcr.io/fluxcd/kustomize-controller:v1.5.1@sha256:b89935f9428764c389c5192fdb8f6c53b66e365fa09ac8cec597e82273e9f518
           name: kustomize-controller
           ports:
             - containerPort: 8080

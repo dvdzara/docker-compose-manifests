@@ -3,7 +3,7 @@
     "vscode": {
       "extensions": [
         "esbenp.prettier-vscode",
-        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "hangxingliu.vscode-systemd-support",
         "redhat.vscode-yaml"
       ]
     }

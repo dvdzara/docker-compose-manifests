@@ -1,5 +1,0 @@
-distSpecVersion: 1.0.1
-http:
-  address: "[::]"
-  port: 8080
-

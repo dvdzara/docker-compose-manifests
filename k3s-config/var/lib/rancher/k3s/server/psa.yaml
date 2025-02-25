@@ -11,7 +11,8 @@ plugins:
         warn: restricted
         warn-version: latest
       exemptions:
-        namespaces: [kube-system]
+        namespaces:
+          - kube-system
         runtimeClasses: []
         usernames: []
       kind: PodSecurityConfiguration

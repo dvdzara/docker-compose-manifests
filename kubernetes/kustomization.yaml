@@ -4,7 +4,7 @@ resources:
   # - alloy
   - authelia
   - blocky
-  - cert-manager
+  # - cert-manager
   - cloudflared
   - default
   - fluxcd

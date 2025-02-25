@@ -1,0 +1,6 @@
+# Address of the server to connect to on startup.
+server: https://:6443 # server tailscale ip
+
+# Copy it from a server node, it is stored in the /var/lib/rancher/k3s/server/agent-token
+# file.
+token: # server token

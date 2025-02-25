@@ -1,0 +1,26 @@
+# yamllint disable rule:key-ordering
+
+# Run `curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=server INSTALL_K3S_CHANNEL=latest sh -`
+# to install the first server.
+
+# For IPv6 chose any random ULA, it will be masqueraded by flannel when needed.
+cluster-cidr: 10.42.0.0/16,fdd2:49b9:30ba:42::/64
+flannel-ipv6-masq: true
+service-cidr: 10.43.0.0/16,fdd2:49b9:30ba:43::/112
+
+cluster-domain: cluster-0.zarantonello.dev
+
+# We don't need or we want to use a different configuration for these
+# components.
+disable:
+  - traefik
+  - local-storage
+  - metrics-server
+  - runtimes
+disable-helm-controller: true
+
+kube-apiserver-arg:
+  - admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml
+
+# Encrypt secrets when they are stored on the filesystem.
+secrets-encryption: true
